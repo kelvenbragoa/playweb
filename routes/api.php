@@ -27,7 +27,7 @@ Route::resource('courts', 'App\Http\Controllers\CourtController');
 Route::resource('genders', 'App\Http\Controllers\GenderController');
 Route::resource('players', 'App\Http\Controllers\PlayerController');
 Route::resource('status', 'App\Http\Controllers\StatusController');
-Route::resource('schedules', 'App\Http\Controllers\SchedulesController');
+Route::resource('schedules', 'App\Http\Controllers\ScheduleController');
 Route::resource('prices', 'App\Http\Controllers\PriceController');
 
 Route::resource('getcourts', 'App\Http\Controllers\Api\CourtsController');

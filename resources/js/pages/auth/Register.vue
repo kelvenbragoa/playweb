@@ -14,7 +14,7 @@
 									</div>
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
-											<h3>Registro  <a href="doctor-register.html">E admin?</a></h3>
+											<h3>Registro  <router-link to="/register">E admin?</router-link></h3>
 										</div>
 										
 										<!-- Register Form -->
@@ -32,7 +32,7 @@
 												<label class="focus-label">Criar Senha</label>
 											</div>
 											<div class="text-right">
-												<a class="forgot-link" href="login.html">Ja tem uma conta?</a>
+												<router-link class="forgot-link" to="/login">Ja tem uma conta?</router-link>
 											</div>
 											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Entrar</button>
 											<div class="login-or">
@@ -41,10 +41,10 @@
 											</div>
 											<div class="row form-row social-login">
 												<div class="col-6">
-													<a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</a>
+													<router-link to="/login" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</router-link>
 												</div>
 												<div class="col-6">
-													<a href="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</a>
+													<router-link to="/login" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</router-link>
 												</div>
 											</div>
 										</form>

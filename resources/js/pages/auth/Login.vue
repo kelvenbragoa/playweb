@@ -26,7 +26,7 @@
 												<label class="focus-label">Senha</label>
 											</div>
 											<div class="text-right">
-												<a class="forgot-link" href="forgot-password.html">Esqueceu a sua senha ?</a>
+												<router-link class="forgot-link" to="/login">Esqueceu a sua senha ?</router-link>
 											</div>
 											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
 											<div class="login-or">
@@ -35,13 +35,13 @@
 											</div>
 											<div class="row form-row social-login">
 												<div class="col-6">
-													<a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</a>
+													<router-link to="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</router-link>
 												</div>
 												<div class="col-6">
-													<a href="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</a>
+													<router-link to="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</router-link>
 												</div>
 											</div>
-											<div class="text-center dont-have">Não tem conta? <a href="register.html">Registrar</a></div>
+											<div class="text-center dont-have">Não tem conta? <router-link to="/register">Registrar</router-link></div>
 										</form>
 									</div>
 								</div>

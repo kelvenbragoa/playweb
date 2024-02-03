@@ -33,10 +33,8 @@
 	
 	</head>
 	<body>
-
 		<!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
+		<div class="main-wrapper" id="app">
 			<!-- Header -->
 			<header class="header">
 				<nav class="navbar navbar-expand-lg header-nav">
