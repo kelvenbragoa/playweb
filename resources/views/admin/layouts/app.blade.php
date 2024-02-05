@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="{{asset('files/img/sys/logoinogesticon.png')}}" />
 	<link href="{{asset('template2/css/app.css')}}" rel="stylesheet">
 	<link rel="stylesheet" href="{{asset('toastr.min.css')}}" />
-	<title>M+D - InoGest</title>
+	<title>Agendei</title>
 </head>
 
 <body>

@@ -20,4 +20,13 @@ class GlobalController extends Controller
                 'courts'=>$courts,
                 ];
     }
+
+    public function home(){
+        $courts = Court::orderBy('id','asc')->get();
+        $prices = Price::orderBy('name','asc')->get();
+        return [
+            'prices'=>$prices,
+            'courts'=>$courts,
+            ];
+    }
 }

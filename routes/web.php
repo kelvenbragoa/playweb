@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 
 Route::get('/auxiliar-create-schedule', [App\Http\Controllers\GlobalController::class, 'auxiliardataschedules']);
+Route::get('/home-data', [App\Http\Controllers\GlobalController::class, 'home']);
 // Route::resource('roles', 'App\Http\Controllers\RoleController');
 // Route::resource('coins', 'App\Http\Controllers\CoinController');
 // Route::resource('courts', 'App\Http\Controllers\CourtController');
