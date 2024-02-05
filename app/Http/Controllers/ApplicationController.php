@@ -11,6 +11,7 @@ class ApplicationController extends Controller
     public function __invoke()
     
     {
+     
         if(Auth::check()){
             if(Auth::user()->role_id == 1){
                 return view('admin.layouts.app');
@@ -20,7 +21,6 @@ class ApplicationController extends Controller
             }
         }else{
             return view('user.app_layout');
-
         }
         
     }

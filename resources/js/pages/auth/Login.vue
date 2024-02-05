@@ -1,3 +1,65 @@
+<script setup>
+
+import axios from 'axios';
+import {reactive, ref} from 'vue';
+
+
+    const form = reactive ({
+        email: '',
+        password: ''
+    });
+
+    const loading = ref(false);
+
+    const errorMessage = ref('');
+    
+
+
+    const handleSubmit = () => {
+      loading.value = true;
+      errorMessage.value = '';
+        axios.post('/login',{
+          email: form.email.toLowerCase(),
+          password:form.password
+        })
+        .then((response)=>{
+            console.log(response.data)
+            
+            if(response.data.role_id == 1){
+              window.location.href="/admin/dashboard";
+            }
+
+            if(response.data.role_id == 2){
+              window.location.href="/manager/dashboard";
+            }
+          
+
+            if(response.data.role_id == 4){
+              window.location.href="/operator/maintenance/dashboard";
+            }
+
+            if(response.data.role_id == 3){
+              window.location.href="/manager/maintenance/dashboard";
+            }
+
+            if(response.data.role_id == 11){
+              window.location.href="/admin/stock/dashboard";
+            }
+            // window.location.href="/admin/dashboard";
+        })
+        .catch((error)=>{
+
+
+          errorMessage.value = error
+          
+        })
+        .finally(()=>{
+          loading.value = false;
+        })
+    }
+
+
+</script>
 <template>
     <!-- Page Content -->
 			<div class="content">
@@ -15,32 +77,30 @@
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
 											<h3>Login no  <span>Agendei</span></h3>
+											<div v-if="errorMessage" class="alert alert-danger" role="alert">
+												<div class="m-2">
+													{{errorMessage}}
+												</div>
+											</div>
 										</div>
-										<form action="https://dreamguys.co.in/demo/doccure/index.html">
+										<form @submit.prevent="handleSubmit">
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
+												<input type="email" class="form-control floating" v-model="form.email"  required>
 												<label class="focus-label">Email</label>
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating">
+												<input type="password" class="form-control floating" v-model="form.password" required>
 												<label class="focus-label">Senha</label>
 											</div>
-											<div class="text-right">
+											<!-- <div class="text-right">
 												<router-link class="forgot-link" to="/login">Esqueceu a sua senha ?</router-link>
-											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
-											<div class="login-or">
-												<span class="or-line"></span>
-												<span class="span-or">Ou</span>
-											</div>
-											<div class="row form-row social-login">
-												<div class="col-6">
-													<router-link to="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</router-link>
-												</div>
-												<div class="col-6">
-													<router-link to="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</router-link>
-												</div>
-											</div>
+											</div> -->
+											
+											<button type="submit" class="btn btn-primary btn-block btn-lg login-btn"  :disabled="loading">
+                                            <div v-if="loading" class="spinner-border spinner-border-sm" role="status"></div>
+                                            <span v-else>Login</span>
+                                            </button>
+											
 											<div class="text-center dont-have">Não tem conta? <router-link to="/register">Registrar</router-link></div>
 										</form>
 									</div>

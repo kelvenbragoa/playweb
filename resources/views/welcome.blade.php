@@ -79,14 +79,14 @@
 								<a href="#" target="_blank">Baixar App</a>
 							</li>
 							<li class="login-link">
-								<a href="login.html">Login / Signup</a>
+								<router-link to="login">Login / Signup</router-link>
 							</li>
 						</ul>		 
 					</div>		 
 					<ul class="nav header-navbar-rht">
 						
 						<li class="nav-item">
-							<a class="nav-link header-login" href="login.html">login / Signup </a>
+							<a class="nav-link header-login" href="login">login / Signup </a>
 						</li>
 					</ul>
 				</nav>
@@ -143,7 +143,7 @@
 									<h2 class="footer-title">Links Rapidos</h2>
 									<ul>
 										<li><a href="search.html"><i class="fas fa-angle-double-right"></i> Procurar por Quadras</a></li>
-										<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>
+										<li><router-link to="login"><i class="fas fa-angle-double-right"></i> Login</router-link></li>
 										<li><a href="register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>
 										<li><a href="booking.html"><i class="fas fa-angle-double-right"></i> Agendar</a></li>
 										
@@ -155,18 +155,7 @@
 							
 							<div class="col-lg-3 col-md-6">
 							
-								<!-- Footer Widget 
-								<div class="footer-widget footer-menu">
-									<h2 class="footer-title">For Doctors</h2>
-									<ul>
-										<li><a href="appointments.html"><i class="fas fa-angle-double-right"></i> Appointments</a></li>
-										<li><a href="chat.html"><i class="fas fa-angle-double-right"></i> Chat</a></li>
-										<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>
-										<li><a href="doctor-register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>
-										<li><a href="doctor-dashboard.html"><i class="fas fa-angle-double-right"></i> Doctor Dashboard</a></li>
-									</ul>
-								</div>
-								/Footer Widget -->
+								
 								
 							</div>
 							
