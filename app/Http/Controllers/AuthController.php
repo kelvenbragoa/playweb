@@ -72,8 +72,8 @@ public function registeruser(Request $request){
             'password'=>Hash::make($data['password']) ,
             'birth_date'=>$data['birth_date'],
             'gender_id'=>$gender,
-            'role_id'=>2
-            
+            'role_id'=>3,
+            'balance'=>0
         ]);
 
         $user = User::find($newuser->id);
