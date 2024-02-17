@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Player;
 use App\Models\Schedule;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Notifications\Operation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class PlayerController extends Controller
 {
@@ -44,6 +48,7 @@ class PlayerController extends Controller
             $schedule->update([
                 'status_id'=>2
             ]);
+            
             $player = Player::create($data);
             $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
             if($lotation>=4){
@@ -56,10 +61,34 @@ class PlayerController extends Controller
                   'user_id'=>$data['user_id']
                 ]);
             }
+
+            $player2 = Player::
+            with('schedule')
+            ->with('schedule.court.club')
+            ->with('schedule.price')
+            ->with('user')
+            ->find($player->id);
+
+            $user = User::find($data['user_id']);
+
+            $user->update([
+                'balance'=>$user->balance - $schedule->price->price
+            ]);
+            $transaction = Transaction::create([
+                'user_id'=> $user->id,
+                'type_transaction_id'=> 1,
+                'amount'=> $schedule->price->price,
+                'balance'=> $user->balance+$schedule->price->price,
+                'method'=> 'INTERNAL',
+                'schedule_id'=>$schedule->id,
+                'player_id'=>$player->id
+            ]);
+            Notification::send($user,new Operation('You joined the schedule : '.$schedule->date));
             return response()->json([
-                'status'=>200,
-                'message'=>'You joined the schedule'
-               ]);
+                'message'=>'You joined the schedule',
+                'player'=>[$player2]
+            ],200
+            );
         }
     }
 
@@ -69,6 +98,15 @@ class PlayerController extends Controller
     public function show(string $id)
     {
         //
+        $player = Player::
+        with('schedule')
+        ->with('schedule.court.club')
+        ->with('schedule.price')
+        ->with('user')
+        ->find($id);
+        return [
+            'player'=>[$player],
+        ];
     }
 
     /**

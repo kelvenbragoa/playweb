@@ -22,7 +22,7 @@ let dataIdBeingDeleted = ref(null);
  const getData = async () => {
   axios.get(`/home-data`)
        .then((response)=>{
-        retriviedData.value = response.data.courts;
+        retriviedData.value = response.data.clubs;
         loadingDiv.value=false;
 		console.log(retriviedData)
         
@@ -55,6 +55,7 @@ onMounted(()=>{
 })
 </script>
 <template>
+		<div v-if="!loadingDiv">
     	<!-- Home Banner -->
 			<section class="section section-search">
 				<div class="container-fluid">
@@ -107,51 +108,54 @@ onMounted(()=>{
 								
 							</div>
 						</div>
+						
 						<div class="col-lg-8">
-							<div class="doctor-slider slider">
+							<div class="row">
 							
 								<!-- Doctor Widget -->
 								<div class="profile-widget" v-for="(actualData) in retriviedData" :key="actualData.id">
 									<div class="doc-img">
-										<a href="">
+										<router-link :to="'/clubs/'+actualData.id">
 											<img class="img-fluid" alt="User Image" src="/letsplay.png">
-										</a>
+										</router-link>
 										<a href="javascript:void(0)" class="fav-btn">
 											<i class="far fa-bookmark"></i>
 										</a>
 									</div>
 									<div class="pro-content">
 										<h3 class="title">
-											<p class="speciality">{{actualData.name}}</p>
-											<i class="fas fa-check-circle verified"></i>
+											
+											<i class="fas fa-check-circle verified"></i><p class="speciality">{{actualData.name}}</p>
 										</h3>
-										<p class="speciality">{{actualData.name}}</p>
-										<div class="rating">
+										<p class="speciality">{{actualData.description}}</p>
+									
+										<!-- <div class="rating">
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<span class="d-inline-block average-rating">(17)</span>
-										</div>
+										</div> -->
 										<ul class="available-info">
 											<li>
-												<i class="fas fa-map-marker-alt"></i> Beira, Moçambique
+												
+												<i class="fas fa-map-marker-alt"></i> {{actualData.address}} / {{ actualData.province==null ? '' : actualData.province.name}} , Moçambique
 											</li>
 											<li>
 												<i class="far fa-clock"></i> Disponivel todos dias
 											</li>
 											<li>
-												<i class="far fa-money-bill-alt"></i> 650 MT 
-												<i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+												<i class="far fa-money-bill-alt"></i> {{actualData.min_price}} MT 
+												<i class="fas fa-info-circle" data-toggle="tooltip" ></i>
 											</li>
 										</ul>
 										<div class="row row-sm">
 											<div class="col-6">
-												<a href="#" class="btn view-btn">Ver detalhes</a>
+												<router-link :to="'/clubs/'+actualData.id" class="btn view-btn">Ver detalhes</router-link>
 											</div>
 											<div class="col-6">
-												<a href="#" class="btn book-btn">Agendar</a>
+												<router-link :to="'/clubs/'+actualData.id" class="btn book-btn">Agendar</router-link>
 											</div>
 										</div>
 									</div>
@@ -167,5 +171,19 @@ onMounted(()=>{
 			</section>
 			<!-- /Popular Section -->
 		   
-		
+		</div>
+		<div v-else>
+			
+			
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+                <br>
+                <div class="d-flex justify-content-center">
+                    Loading...
+                </div>
+       
+		</div>
 </template>

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'mobile',
         'role_id',
         'email',
+        'balance',
         'password',
     ];
 
@@ -50,5 +51,9 @@ class User extends Authenticatable
 
     public function role(){
         return $this->hasOne('App\Models\Role', 'id', 'role_id');
+    }
+
+    public function club(){
+        return $this->hasOne('App\Models\Club', 'user_id', 'id');
     }
 }

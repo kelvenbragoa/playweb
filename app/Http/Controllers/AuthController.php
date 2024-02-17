@@ -35,7 +35,7 @@ class AuthController extends Controller
       
         $data = $request->all();
 
-        if(!Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'role_id' => 2])){
+        if(!Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'role_id' => 3])){
             return response(
                [ 'message' => 'Usuario/Password Incorretos'], 403
             );

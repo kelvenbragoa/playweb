@@ -17,6 +17,9 @@ class ApplicationController extends Controller
                 return view('admin.layouts.app');
             }
             if(Auth::user()->role_id == 2){
+                return view('owner.layouts.app');
+            }
+            if(Auth::user()->role_id == 3){
                 return view('user.app_layout');
             }
         }else{

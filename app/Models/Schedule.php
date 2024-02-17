@@ -25,4 +25,11 @@ class Schedule extends Model
     public function players(){
         return $this->hasMany('App\Models\Player','schedule_id','id');
     }
+
+    public function getPlayersCountAttribute()
+    {
+        return $this->players()->count();
+    }
+
+    protected $appends = ['players_count'];
 }

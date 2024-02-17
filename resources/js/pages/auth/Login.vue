@@ -30,21 +30,15 @@ import {reactive, ref} from 'vue';
             }
 
             if(response.data.role_id == 2){
-              window.location.href="/manager/dashboard";
+              window.location.href="/owner/dashboard";
             }
           
 
-            if(response.data.role_id == 4){
-              window.location.href="/operator/maintenance/dashboard";
-            }
-
             if(response.data.role_id == 3){
-              window.location.href="/manager/maintenance/dashboard";
+              window.location.href="/user/home";
             }
 
-            if(response.data.role_id == 11){
-              window.location.href="/admin/stock/dashboard";
-            }
+          
             // window.location.href="/admin/dashboard";
         })
         .catch((error)=>{

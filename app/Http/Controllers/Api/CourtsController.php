@@ -11,6 +11,15 @@ class CourtsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    /**
+     * @SWG\Get(
+     *     path="/courts",
+     *     summary="Get a list of courts",
+     *     tags={"Courts"},
+     *     @SWG\Response(response=200, description="Successful operation"),
+     *     @SWG\Response(response=400, description="Invalid request")
+     * )
+     */
     public function index()
     {
         //
@@ -57,7 +66,7 @@ class CourtsController extends Controller
     public function show(string $id)
     {
         //
-        $court = Court::find($id);
+        $court = Court::with('club')->find($id);
         return [
             'court'=>[$court],
         ];

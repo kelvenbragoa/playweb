@@ -12,5 +12,8 @@ class Player extends Model
     public function schedule(){
         return $this->hasOne('App\Models\Schedule','id','schedule_id');
     }
+    public function user(){
+        return $this->hasOne('App\Models\User','id','user_id');
+    }
     
 }

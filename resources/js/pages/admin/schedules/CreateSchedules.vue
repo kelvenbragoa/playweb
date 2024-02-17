@@ -40,7 +40,7 @@ const createRecordFunction = (values, actions) => {
     // $('#createCategory').modal('hide');
     actions.resetForm();
     router.push({ path: '/admin/schedules' });
-    toastr.success('Área criada com sucesso');
+    toastr.success('Horario criado com sucesso');
   }).catch((error)=>{
     
     loading.value = false;

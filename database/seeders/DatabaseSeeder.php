@@ -49,6 +49,12 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id'=>2,
+                'name'=>'OWNER',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id'=>3,
                 'name'=>'USER',
                 'created_at'=>now(),
                 'updated_at'=>now()
@@ -130,13 +136,43 @@ class DatabaseSeeder extends Seeder
             [
                 'id'=>2,
                 'name'=>'User',
-                'surname'=>'Norma',
+                'surname'=>'Club Owner',
                 'mobile'=>'842648617',
                 'birth_date'=>'1998/09/18',
                 'gender_id'=>1,
                 'role_id'=>2,
+                'email'=>'owner@test.com',
+                'password'=>static::$password ??= Hash::make('password'),
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id'=>3,
+                'name'=>'User',
+                'surname'=>'Normal',
+                'mobile'=>'842648617',
+                'birth_date'=>'1998/09/18',
+                'gender_id'=>1,
+                'role_id'=>3,
                 'email'=>'user@test.com',
                 'password'=>static::$password ??= Hash::make('password'),
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+        ]);
+        
+        
+
+        DB::table('clubs')->insert([
+            [
+                'id'=>1,
+                'name'=>'Club Padel Beira',
+                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                'user_id'=>'2',
+                'description'=>'Club de Padel da cidade da Beira',
+                'address'=>'Rua do Estoril',
+                'province_id'=>'1',
+                'min_price'=>'600.00',
                 'created_at'=>now(),
                 'updated_at'=>now()
             ],
@@ -148,6 +184,7 @@ class DatabaseSeeder extends Seeder
                 'name'=>'Quadra 1',
                 'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                 'limit'=>'4',
+                'club_id'=>'1',
                 'description'=>'Quadra de jogo de padel 1',
                 'created_at'=>now(),
                 'updated_at'=>now()
@@ -157,6 +194,7 @@ class DatabaseSeeder extends Seeder
                 'name'=>'Quadra 2',
                 'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                 'limit'=>'4',
+                'club_id'=>'1',
                 'description'=>'Quadra de jogo de padel 2',
                 'created_at'=>now(),
                 'updated_at'=>now()
@@ -166,6 +204,7 @@ class DatabaseSeeder extends Seeder
                 'name'=>'Quadra 3',
                 'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                 'limit'=>'4',
+                'club_id'=>'1',
                 'description'=>'Quadra de jogo de padel 3',
                 'created_at'=>now(),
                 'updated_at'=>now()
@@ -175,6 +214,7 @@ class DatabaseSeeder extends Seeder
                 'name'=>'Quadra 4',
                 'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                 'limit'=>'4',
+                'club_id'=>'1',
                 'description'=>'Quadra de jogo de padel 4',
                 'created_at'=>now(),
                 'updated_at'=>now()
@@ -249,5 +289,96 @@ class DatabaseSeeder extends Seeder
                 'updated_at'=>now()
             ],
         ]);
+
+        DB::table('provinces')->insert([
+            [
+                'id' =>1,
+                'name' => 'Maputo Cidade',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>2,
+                'name' => 'Maputo Província',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>3,
+                'name' => 'Inhambane',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>4,
+                'name' => 'Gaza',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>5,
+                'name' => 'Sofala',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>6,
+                'name' => 'Manica',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>7,
+                'name' => 'Tete',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>8,
+                'name' => 'Zambézia',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>9,
+                'name' => 'Nampula',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>10,
+                'name' => 'Cabo Delgado',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id' =>11,
+                'name' => 'Niassa',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+           ]);
+
+           DB::table('type_transactions')->insert([
+            [
+                'id'=>1,
+                'name'=>'Compra',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id'=>2,
+                'name'=>'Recarga',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'id'=>3,
+                'name'=>'Devolução',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+        ]);
+
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('mobile');
             $table->date('birth_date');
             $table->integer('gender_id');
+            $table->double('balance',10,2)->default(0.00);
             $table->integer('role_id');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

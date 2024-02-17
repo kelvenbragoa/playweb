@@ -2,7 +2,10 @@
 import Login from './pages/auth/Login.vue';
 import Register from './pages/auth/Register.vue';
 import Home from './pages/home/Home.vue';
+import Clubs from './pages/home/Clubs.vue';
+import Schedule from './pages/home/Schedule.vue';
 import DashboardAdmin from './components/DashboardAdmin.vue';
+import DashboardOwner from './components/DashboardOwner.vue';
 
 import IndexUsers from './pages/admin/users/IndexUsers.vue';
 import CreateUsers from './pages/admin/users/CreateUsers.vue';
@@ -18,6 +21,18 @@ import IndexSchedules from './pages/admin/schedules/IndexSchedules.vue';
 import CreateSchedules from './pages/admin/schedules/CreateSchedules.vue';
 import ShowSchedules from './pages/admin/schedules/ShowSchedules.vue';
 import EditSchedules from './pages/admin/schedules/EditSchedules.vue';
+
+//OWNER IMPORT----------------------------------------------------------------
+
+import IndexOwnerCourts from './pages/owner/courts/IndexOwnerCourts.vue';
+import CreateOwnerCourts from './pages/owner/courts/CreateOwnerCourts.vue';
+import ShowOwnerCourts from './pages/owner/courts/ShowOwnerCourts.vue';
+import EditOwnerCourts from './pages/owner/courts/EditOwnerCourts.vue';
+
+import IndexOwnerClub from './pages/owner/club/IndexOwnerClub.vue';
+import CreateOwnerClub from './pages/owner/club/CreateOwnerClub.vue';
+import ShowOwnerClub from './pages/owner/club/ShowOwnerClub.vue';
+import EditOwnerClub from './pages/owner/club/EditOwnerClub.vue';
 
 export default [
     //auth
@@ -43,11 +58,31 @@ export default [
         name: 'mainhome',
         component: Home,
     },
+    {
+        path: '/clubs/:id',
+        name: 'home.clubs.show',
+        component: Clubs,
+    },
+    {
+        path: '/schedule/courts/:id',
+        name: 'home.courts.schedule',
+        component: Schedule,
+    },
+
+
+
+
     //admins
     {
         path: '/admin/dashboard',
         name: 'admin.dashboard',
         component: DashboardAdmin,
+    },
+
+    {
+        path: '/owner/dashboard',
+        name: 'owner.dashboard',
+        component: DashboardOwner,
     },
 
     //users
@@ -114,5 +149,54 @@ export default [
         path: '/admin/schedules/:id/edit',
         name: 'admin.schedules.edit',
         component: EditSchedules,
+    },
+
+
+
+
+    //OWNER ROUTER ------------------------------------------------------------------------------------------------
+
+    //courts
+    {
+        path: '/owner/courts',
+        name: 'owner.courts.index',
+        component: IndexOwnerCourts,
+    },
+    {
+        path: '/owner/courts/create',
+        name: 'owner.courts.create',
+        component: CreateOwnerCourts,
+    },
+    {
+        path: '/owner/courts/:id',
+        name: 'owner.courts.show',
+        component: ShowOwnerCourts,
+    },
+    {
+        path: '/owner/courts/:id/edit',
+        name: 'owner.courts.edit',
+        component: EditOwnerCourts,
+    },
+
+    //courts
+    {
+        path: '/owner/club',
+        name: 'owner.club.index',
+        component: IndexOwnerClub,
+    },
+    {
+        path: '/owner/club/create',
+        name: 'owner.club.create',
+        component: CreateOwnerClub,
+    },
+    {
+        path: '/owner/club/:id',
+        name: 'owner.club.show',
+        component: ShowOwnerClub,
+    },
+    {
+        path: '/owner/club/:id/edit',
+        name: 'owner.club.edit',
+        component: EditOwnerClub,
     },
 ]

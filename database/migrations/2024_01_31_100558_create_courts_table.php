@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image_url');
             $table->integer('limit');
+            $table->integer('club_id');
             $table->text('description');
             $table->timestamps();
         });

@@ -3506,6 +3506,7 @@ html.menu-opened body {
     padding-left: 5px;
     padding-right: 5px;
     width: 14.28%;
+	margin-bottom: 5px;
 }
 .time-slot li .timing {
     background-color: #e9e9e9;

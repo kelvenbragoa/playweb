@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Player;
 use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -84,5 +85,17 @@ class ScheduleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showschedule($id,$userid){
+        $schedule = Schedule::with('status')->with('price')->with('court')->find($id);
+        $user = User::find($userid);
+        $lotation =  Player::where('schedule_id',$id)->count();
+        $schedule->players=$lotation;
+        $schedule->balance=$user->balance;
+        
+
+
+        return ['schedule'=>[$schedule]];
     }
 }

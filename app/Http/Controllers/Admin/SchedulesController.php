@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
+use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +58,17 @@ class SchedulesController extends Controller
           
         ]);
 
+        $court = Court::find($data['court_id']);
+        $test1 = Schedule::where('court_id',$data['court_id'])->where('date',$data['date'])->where('start_time',$data['start_time'])->count();
+        $test2 = Schedule::where('court_id',$data['court_id'])->where('date',$data['date'])->where('end_time',$data['end_time'])->count();
+
+        if($test1>0|| $test2>0){
+            return response()->json(
+                ['message'=>'Existe um agendamento com este horario ja cadasatrado'],
+                401
+            );
+        }
+
         
             $schedule = Schedule::create([
                 'date' => $data['date'],
@@ -65,6 +77,7 @@ class SchedulesController extends Controller
                 'price_id' => $data['price_id'],
                 'court_id' => $data['court_id'],
                 'status_id' => 1,
+                'owner_id'=>$court->owner_id
             ]);
     
             return $schedule;

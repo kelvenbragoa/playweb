@@ -45,48 +45,48 @@
 								<span></span>
 								<span></span>
 							</span>
-						</a>
-						<a href="index.html" class="navbar-brand logo">
+						</router-link>
+						<router-link to="/login" class="navbar-brand logo">
 							<h3 style="color: #f7784a; font-weight: bold;">LetsPlay</h3>
-						</a>
+						</router-link>
 					</div>
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
-							<a href="index.html" class="menu-logo">
+							<router-link to="/login" class="menu-logo">
 								<h3>Agendei</h3>
-							</a>
+							</router-link>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
 								<i class="fas fa-times"></i>
-							</a>
+							</router-link>
 						</div>
 						<ul class="main-nav">
 							<li class="active">
-								<a href="index.html">Home</a>
+								<router-link to="/">Home</router-link>
 							</li>
 							<li class="has-submenu">
-								<a href="#">Passo a Passo <i class=""></i></a>
+								<router-link to="/login">Passo a Passo <i class=""></i></router-link>
 								
 							</li>	
 							<li class="has-submenu">
-								<a href="#">Novidades <i class=""></i></a>
+								<router-link to="/login">Novidades <i class=""></i></router-link>
 								
 							</li>	
 							<li class="has-submenu">
-								<a href="#">Agendar <i class=""></i></a>
+								<router-link to="/login">Agendar <i class=""></i></router-link>
 								
 							</li>
 							<li>
-								<a href="#" target="_blank">Baixar App</a>
+								<router-link to="/login" >Baixar App</router-link>
 							</li>
 							<li class="login-link">
-								<a href="login.html">Login / Signup</a>
+								<router-link to="/login">Login / Signup</router-link>
 							</li>
 						</ul>		 
 					</div>		 
 					<ul class="nav header-navbar-rht">
 						
 						<li class="nav-item">
-							<a class="nav-link header-login" href="login.html">login / Signup </a>
+							<router-link class="nav-link header-login" to="/login">Login / Signup </router-link>
 						</li>
 					</ul>
 				</nav>
@@ -114,19 +114,19 @@
 										<div class="social-icon">
 											<ul>
 												<li>
-													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+													<router-link to="/login"><i class="fab fa-facebook-f"></i> </router-link>
 												</li>
 												<li>
-													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+													<router-link to="/login"><i class="fab fa-twitter"></i> </router-link>
 												</li>
 												<li>
-													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+													<router-link to="/login"><i class="fab fa-linkedin-in"></i></router-link>
 												</li>
 												<li>
-													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+													<router-link to="/login"><i class="fab fa-instagram"></i></router-link>
 												</li>
 												<li>
-													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+													<router-link to="/login"><i class="fab fa-dribbble"></i> </router-link>
 												</li>
 											</ul>
 										</div>
@@ -142,10 +142,10 @@
 								<div class="footer-widget footer-menu">
 									<h2 class="footer-title">Links Rapidos</h2>
 									<ul>
-										<li><a href="search.html"><i class="fas fa-angle-double-right"></i> Procurar por Quadras</a></li>
-										<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>
-										<li><a href="register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>
-										<li><a href="booking.html"><i class="fas fa-angle-double-right"></i> Agendar</a></li>
+										<li><router-link to="/login"><i class="fas fa-angle-double-right"></i> Procurar por Quadras</router-link></li>
+										<li><router-link to="/login"><i class="fas fa-angle-double-right"></i> Login</router-link></li>
+										<li><router-link to="/login"><i class="fas fa-angle-double-right"></i> Register</router-link></li>
+										<li><router-link to="/login"><i class="fas fa-angle-double-right"></i> Agendar</router-link></li>
 										
 									</ul>
 								</div>
@@ -155,18 +155,7 @@
 							
 							<div class="col-lg-3 col-md-6">
 							
-								<!-- Footer Widget 
-								<div class="footer-widget footer-menu">
-									<h2 class="footer-title">For Doctors</h2>
-									<ul>
-										<li><a href="appointments.html"><i class="fas fa-angle-double-right"></i> Appointments</a></li>
-										<li><a href="chat.html"><i class="fas fa-angle-double-right"></i> Chat</a></li>
-										<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>
-										<li><a href="doctor-register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>
-										<li><a href="doctor-dashboard.html"><i class="fas fa-angle-double-right"></i> Doctor Dashboard</a></li>
-									</ul>
-								</div>
-								/Footer Widget -->
+								
 								
 							</div>
 							
@@ -208,7 +197,7 @@
 							<div class="row">
 								<div class="col-md-6 col-lg-6">
 									<div class="copyright-text">
-										<p class="mb-0"><a href="#">ConnectUs</a></p>
+										<p class="mb-0"><router-link to="/">ConnectUs</router-link></p>
 									</div>
 								</div>
 								<div class="col-md-6 col-lg-6">
@@ -216,8 +205,8 @@
 									<!-- Copyright Menu -->
 									<div class="copyright-menu">
 										<ul class="policy-menu">
-											<li><a href="term-condition.html">Terms and Conditions</a></li>
-											<li><a href="privacy-policy.html">Policy</a></li>
+											<li><router-link to="/">Terms and Conditions</router-link></li>
+											<li><router-link to="/">Policy</router-link></li>
 										</ul>
 									</div>
 									<!-- /Copyright Menu -->
