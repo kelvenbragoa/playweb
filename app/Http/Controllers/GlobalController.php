@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\Coin;
 use App\Models\Court;
 use App\Models\Price;
 use App\Models\Province;
@@ -19,12 +20,14 @@ class GlobalController extends Controller
         $courts = Court::orderBy('id','asc')->get();
         $prices = Price::orderBy('name','asc')->get();
         $provinces = Province::get();
+        $coins = Coin::get();
        
 
         return [
                 'prices'=>$prices,
                 'courts'=>$courts,
-                'provinces'=>$provinces
+                'provinces'=>$provinces,
+                'coins'=>$coins
                 ];
     }
 
@@ -49,7 +52,7 @@ class GlobalController extends Controller
     }
 
     public function schedule($id){
-        $schedule = Schedule::with('status')->with('price')->with('court')->where('court_id',$id)->orderBy('start_time','asc')->get();
+        $schedule = Schedule::with('status')->with('price')->with('court')->where('court_id',$id)->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get();
         $court = Court::with('club.province')->find($id);
 
         $startDate = Carbon::now();
@@ -63,6 +66,16 @@ class GlobalController extends Controller
             'schedule'=>$schedule,
             'court'=>$court,
             'dates'=>$dateRange
+        ];
+    }
+
+    public function updateschedule($date,$id){
+        $schedule = Schedule::with('status')->with('price')->with('court')->where('court_id',$id)->where('date',$date)->orderBy('start_time','asc')->get();
+        $court = Court::with('club.province')->find($id);
+
+        return [
+            'schedule'=>$schedule,
+            'court'=>$court,
         ];
     }
 }

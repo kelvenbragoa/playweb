@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->double('price',10,2);
             $table->integer('coin_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

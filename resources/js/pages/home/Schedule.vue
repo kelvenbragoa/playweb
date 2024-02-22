@@ -7,12 +7,17 @@ import {debounce} from 'lodash';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import VueFeather from 'vue-feather';
 import { useRouter} from "vue-router";
+import VCalendar from 'v-calendar';
+import { Calendar, DatePicker } from 'v-calendar';
+import 'v-calendar/style.css';
+import { delay } from 'lodash';
 
 const searchQuery = ref(null);
 const loadingDiv = ref(true);
+const loadingDivSchedule = ref(true);
 const loadingButtonDelete = ref(false);
 const router = useRouter();
-
+const selectedDate = ref(null);
 
 // const retrievedData = ref({'data': []})
 const retrievedData = ref([])
@@ -22,6 +27,31 @@ const schedule = ref([])
 let dataIdBeingDeleted = ref(null);
 
 
+const onDateRangeChange = (data) => {
+
+	if(data != null){
+		
+
+		
+		var newDate = moment(data).format('Y-MM-D')
+		// alert(newDate)
+		axios.get(`/updateschedule/${newDate}/${router.currentRoute.value.params.id}`, 
+	{
+		})
+		.then((response)=>{
+			
+			retrievedData.value = response.data.schedule;
+			// dates.value = response.data.dates;
+			// court.value = response.data.court;
+		
+		}).catch(()=>{
+		
+		})
+
+		}
+	
+
+}
 
 const getData = async () => {
   axios.get(`/home-schedule-court/${router.currentRoute.value.params.id}`, 
@@ -32,12 +62,14 @@ const getData = async () => {
       })
        .then((response)=>{
         loadingDiv.value=false;
+		loadingDivSchedule.value=false;
         retrievedData.value = response.data.schedule;
 		dates.value = response.data.dates;
         court.value = response.data.court;
      
        }).catch(()=>{
         loadingDiv.value=false;
+		loadingDivSchedule.value=false;
        })
 }
 
@@ -103,22 +135,30 @@ onMounted(()=>{
 								<div class="schedule-header">
 									<div class="row">
 										<div class="col-md-12">
+											<!-- <p>Data {{ selectedDate }}</p> -->
+											<!-- <vue-inline-calendar :spec-min-date="new Date()" @select-date="selectedDate = $event"/> -->
+											<!-- <vue-inline-calendar :spec-min-date="new Date()" @select-date="alert('yeah')" @click="alert('yeah')"/> -->
+											<!-- <vue-horizontal-calendar></vue-horizontal-calendar> -->
+											
+  											<DatePicker v-model="selectedDate" view="weekly" :min-date="new Date()" :update-on-input="onDateRangeChange(selectedDate)" expanded/>
+
 										
 											<!-- Day Slot -->
-											<div class="day-slot">
+											<!-- <div class="day-slot">
 												<ul>
-													<!-- <li class="left-arrow">
+													<li class="left-arrow">
 														<a href="#">
 															<i class="fa fa-chevron-left"></i>
 														</a>
-													</li> -->
+													</li>
+													
 													<li v-for="(date) in dates" :key="date.id">
 														<span>{{moment(date).format('dd')}}</span>
 														<span class="slot-date">{{moment(date).format('D MMM')}} <small class="slot-year">{{moment(date).format('Y')}}</small></span>
 													</li>
 													
 												</ul>
-											</div>
+											</div> -->
 											<!-- /Day Slot -->
 											
 										</div>
@@ -129,28 +169,32 @@ onMounted(()=>{
 								<!-- Schedule Content -->
 								<div class="schedule-cont">
 									<div class="row">
-										<div class="col-md-12">
+
 										
-											<!-- Time Slot -->
-											<div class="time-slot">
-												<ul class="clearfix">
-													<li v-for="(schedule) in retrievedData" :key="schedule.id" >
-														<a class="timing bg-success" href="#" v-if="schedule.status_id==1">
-															<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
-														</a>
-														<a class="timing bg-warning" href="#" v-if="schedule.status_id==2">
-															<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
-														</a>
-														<a class="timing bg-danger" href="#" v-if="schedule.status_id==3">
-															<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
-														</a>
-													</li>
-													
-												</ul>
-											</div>
-											<!-- /Time Slot -->
+										
+											<div class="col-md-12">
 											
-										</div>
+												<!-- Time Slot -->
+												<div class="time-slot">
+													<ul class="clearfix">
+														<li v-for="(schedule) in retrievedData" :key="schedule.id" >
+															<a class="timing bg-success" href="#" v-if="schedule.status_id==1">
+																<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
+															</a>
+															<a class="timing bg-warning" href="#" v-if="schedule.status_id==2">
+																<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
+															</a>
+															<a class="timing bg-danger" href="#" v-if="schedule.status_id==3">
+																<span>{{ schedule.start_time}}</span> <br> to <br> <span>{{schedule.end_time }}</span> 
+															</a>
+														</li>
+														
+													</ul>
+												</div>
+												<!-- /Time Slot -->
+												
+											</div>
+									
 									</div>
 								</div>
 								<!-- /Schedule Content -->

@@ -25,6 +25,11 @@ Route::get('/auxiliar-create-schedule', [App\Http\Controllers\GlobalController::
 Route::get('/home-data', [App\Http\Controllers\GlobalController::class, 'home']);
 Route::get('/home-clubs/{id}', [App\Http\Controllers\GlobalController::class, 'clubs']);
 Route::get('/home-schedule-court/{id}', [App\Http\Controllers\GlobalController::class, 'schedule']);
+Route::get('/updateschedule/{date}/{courtid}', [App\Http\Controllers\GlobalController::class, 'updateschedule']);
+
+Route::get('/updatecourtschedule/{date}/{courtid}', [App\Http\Controllers\Owner\CourtsController::class, 'updatecourtschedule']);
+
+
 
 
 
@@ -56,6 +61,9 @@ Route::get('/admins/dashboard/getdashboarddata', [App\Http\Controllers\Admin\Das
 Route::resource('owner-courts', 'App\Http\Controllers\Owner\CourtsController');
 Route::resource('owner-club', 'App\Http\Controllers\Owner\ClubController');
 Route::resource('owner-schedules', 'App\Http\Controllers\Owner\ScheduleController');
+Route::resource('owner-prices', 'App\Http\Controllers\Owner\PricesController');
+Route::get('owner-search-users', [App\Http\Controllers\Owner\ScheduleController::class, 'searchusers']);
+
 
 
 

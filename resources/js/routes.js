@@ -34,6 +34,16 @@ import CreateOwnerClub from './pages/owner/club/CreateOwnerClub.vue';
 import ShowOwnerClub from './pages/owner/club/ShowOwnerClub.vue';
 import EditOwnerClub from './pages/owner/club/EditOwnerClub.vue';
 
+import IndexOwnerPrices from './pages/owner/prices/IndexOwnerPrices.vue';
+import CreateOwnerPrices from './pages/owner/prices/CreateOwnerPrices.vue';
+import ShowOwnerPrices from './pages/owner/prices/ShowOwnerPrices.vue';
+import EditOwnerPrices from './pages/owner/prices/EditOwnerPrices.vue';
+
+import IndexOwnerSchedules from './pages/owner/schedules/IndexOwnerSchedules.vue';
+import CreateOwnerSchedules from './pages/owner/schedules/CreateOwnerSchedules.vue';
+import ShowOwnerSchedules from './pages/owner/schedules/ShowOwnerSchedules.vue';
+import EditOwnerSchedules from './pages/owner/schedules/EditOwnerSchedules.vue';
+
 export default [
     //auth
     {
@@ -198,5 +208,49 @@ export default [
         path: '/owner/club/:id/edit',
         name: 'owner.club.edit',
         component: EditOwnerClub,
+    },
+
+     //prices
+     {
+        path: '/owner/prices',
+        name: 'owner.prices.index',
+        component: IndexOwnerPrices,
+    },
+    {
+        path: '/owner/prices/create',
+        name: 'owner.prices.create',
+        component: CreateOwnerPrices,
+    },
+    {
+        path: '/owner/prices/:id',
+        name: 'owner.prices.show',
+        component: ShowOwnerPrices,
+    },
+    {
+        path: '/owner/prices/:id/edit',
+        name: 'owner.prices.edit',
+        component: EditOwnerPrices,
+    },
+
+     //schedules
+    //  {
+    //     path: '/owner/schedules',
+    //     name: 'owner.schedules.index',
+    //     component: IndexOwnerSchedules,
+    // },
+    // {
+    //     path: '/owner/schedules/create',
+    //     name: 'owner.schedules.create',
+    //     component: CreateOwnerSchedules,
+    // },
+    {
+        path: '/owner/schedules/:id',
+        name: 'owner.schedules.show',
+        component: ShowOwnerSchedules,
+    },
+    {
+        path: '/owner/schedules/:id/edit',
+        name: 'owner.schedules.edit',
+        component: EditOwnerSchedules,
     },
 ]

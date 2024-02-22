@@ -78,7 +78,7 @@ class PlayerController extends Controller
                 'user_id'=> $user->id,
                 'type_transaction_id'=> 1,
                 'amount'=> $schedule->price->price,
-                'balance'=> $user->balance+$schedule->price->price,
+                'balance'=> $user->balance-$schedule->price->price,
                 'method'=> 'INTERNAL',
                 'schedule_id'=>$schedule->id,
                 'player_id'=>$player->id

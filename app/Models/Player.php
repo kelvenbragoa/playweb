@@ -15,5 +15,9 @@ class Player extends Model
     public function user(){
         return $this->hasOne('App\Models\User','id','user_id');
     }
+
+    public function transaction(){
+        return $this->hasOne('App\Models\Transaction','player_id','id');
+    }
     
 }

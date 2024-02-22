@@ -29,11 +29,11 @@ const schema = yup.object({
 
 
 const getData = () => {
-  axios.get(`/owner-courts/+${router.currentRoute.value.params.id}/edit`)
+  axios.get(`/owner-prices/+${router.currentRoute.value.params.id}/edit`)
        .then((response)=>{
 
         loadingDiv.value=false;
-        retrievedData.value = response.data.court;
+        retrievedData.value = response.data.price;
 
        }).catch(()=>{
 
@@ -45,13 +45,13 @@ const getData = () => {
 const editFunction = (values, actions) => {
 
   loadingButtonSubmit.value = true;
-  axios.patch(`/owner-courts/${retrievedData.value.id}`,values).then((response)=>{
+  axios.patch(`/owner-prices/${retrievedData.value.id}`,values).then((response)=>{
 
     // admins.value.unshift(response.data);
     // $('#createCategory').modal('hide');
     actions.resetForm();
-    router.push({ path: '/owner/courts' });
-    toastr.success('Quadra editada com sucesso');
+    router.push({ path: '/owner/prices' });
+    toastr.success('Registro editada com sucesso');
 
   }).catch((error)=>{
 
@@ -76,15 +76,15 @@ onMounted(()=>{
 <template>
     <div v-if="!loadingDiv">
 
-        <h1 class="h3 mb-3">Quadra</h1>
+        <h1 class="h3 mb-3">Preço</h1>
         
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Quadra: {{ retrievedData.name }}</h5>
+                                        <h5 class="card-title">Preço: {{ retrievedData.name }}</h5>
 
-                                        <router-link to="/owner/courts" class="btn btn-pill btn-primary mt-3"><vue-feather type="arrow-left"></vue-feather>Voltar</router-link> 
+                                        <router-link to="/admin/brands" class="btn btn-pill btn-primary mt-3"><vue-feather type="arrow-left"></vue-feather>Voltar</router-link> 
 
                                        
 								    </div>
@@ -103,19 +103,12 @@ onMounted(()=>{
                                                                 <span class="invalid-feedback">{{ errors.name }}</span>
                                                             </div>
                                                         </div>
+												
                                                         <div class="row">
                                                             <div class="mb-3 col-md-12">
-                                                                <label class="form-label" for="image_url">URL Imagem</label>
-                                                                <Field type="text" class="form-control" :class="{'is-invalid':errors.image_url}" name="image_url" v-model="retrievedData.image_url" id="image_url" placeholder="Image URL"/>
-                                                                <span class="invalid-feedback">{{ errors.image_url }}</span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="mb-3 col-md-12">
-                                                                <label class="form-label" for="description">Descrição</label>
-                                                                <Field type="text" class="form-control" :class="{'is-invalid':errors.description}" name="description" v-model="retrievedData.description" id="description" placeholder="Endereço"/>
-                                                                <span class="invalid-feedback">{{ errors.description }}</span>
+                                                                <label class="form-label" for="price">Preço</label>
+                                                                <Field type="text" class="form-control" :class="{'is-invalid':errors.price}" name="price" v-model="retrievedData.price" id="price" placeholder="Preço"/>
+                                                                <span class="invalid-feedback">{{ errors.price }}</span>
                                                             </div>
                                                         </div>
 												

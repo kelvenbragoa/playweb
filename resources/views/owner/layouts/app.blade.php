@@ -52,6 +52,12 @@
 					</li>
 
 					<li class="sidebar-item">
+						<router-link class="sidebar-link" to="/owner/prices">
+							<i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Preços</span>
+						</router-link>
+					</li>
+
+					<li class="sidebar-item">
 						<router-link class="sidebar-link" to="/owner/club">
 							<i class="align-middle" data-feather="box"></i> <span class="align-middle">Meu Clube</span>
 						</router-link>

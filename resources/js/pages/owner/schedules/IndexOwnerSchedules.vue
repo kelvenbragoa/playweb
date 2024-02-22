@@ -21,7 +21,7 @@ let dataIdBeingDeleted = ref(null);
 
 
  const getData = async (page = 1) => {
-  axios.get(`/owner-courts?page=${page}`,
+  axios.get(`/owner-prices?page=${page}`,
       {
         params:{
           query: searchQuery.value
@@ -54,16 +54,15 @@ const deleteData = () =>{
 
 loadingButtonDelete.value= true;
 
-axios.delete(`/owner-courts/${dataIdBeingDeleted}`)
-.then(()=>{
+axios.delete(`/owner-prices/${dataIdBeingDeleted}`)
+.then((response)=>{
  retriviedData.value.data = retriviedData.value.data.filter(data=>data.id !== dataIdBeingDeleted); 
  $('#deleteModal').modal('hide');
 
  toastr.success('Registro apagado com sucesso');
 
 }).catch((response)=>{
-    console.log(response);
- toastr.error('Erro ao apagar.'+response.response.data.message);
+ toastr.error('Erro ao apagar. ');
  loadingButtonDelete.value= false;
  $('#deleteModal').modal('hide');
 }).finally(()=>{
@@ -83,16 +82,16 @@ onMounted(()=>{
 
 <template>
     <div v-if="!loadingDiv">
-        <h1 class="h3 mb-3">Quadras</h1>
+        <h1 class="h3 mb-3">Preços do Clube</h1>
         
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Tabela das Quadras do sistema. {{ retriviedData.total }} registros encontrados.</h5>
+                                        <h5 class="card-title">Tabela das Preços do Clube do sistema. {{ retriviedData.total }} registros encontrados.</h5>
                                         <h6 class="card-subtitle text-muted">Para procurar, digite na caixa de procura</h6>
 
-                                        <router-link to="/owner/courts/create" class="btn btn-pill btn-primary mt-3"><vue-feather type="plus"></vue-feather>Adicionar</router-link> 
+                                        <router-link to="/owner/prices/create" class="btn btn-pill btn-primary mt-3"><vue-feather type="plus"></vue-feather>Adicionar</router-link> 
 
                                         <br>
 
@@ -109,8 +108,9 @@ onMounted(()=>{
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Quadra</th>
-                                                        <th>Descrição</th>
+                                                        <th>Nome do Preço</th>
+                                                        <th>Valor</th>
+                                                        <th>Moeda</th>
                                                         <th>Ações</th>
                                                     </tr>
                                                 </thead>
@@ -118,10 +118,11 @@ onMounted(()=>{
                                                     <tr  v-for="(actualData,index) in retriviedData.data" :key="actualData.id">
                                                         <td>#{{ index + 1 }}</td>
                                                         <td>{{ actualData.name}}</td>
-                                                        <td>{{ actualData.description}}</td>
+                                                        <td>{{ actualData.price}}</td>
+                                                        <td>{{ actualData.coin.name}}</td>
                                                         <td>
-                                                            <router-link :to="'/owner/courts/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link>
-                                                            <router-link :to="'/owner/courts/'+actualData.id"><vue-feather type="eye"></vue-feather></router-link> 
+                                                            <router-link :to="'/owner/prices/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link>
+                                                            <router-link :to="'/owner/prices/'+actualData.id"><vue-feather type="eye"></vue-feather></router-link> 
                                                             <a href="#" @click.prevent="confirmDeletion(actualData)"><vue-feather type="trash"></vue-feather></a>
                                                             
                                                         </td>

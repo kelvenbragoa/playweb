@@ -84,7 +84,7 @@ class CourtsController extends Controller
 
         $court = Court::
         find($id);
-        $schedule = Schedule::where('court_id',$id)->with('court')->with('price')->with('status')->orderBy('date','desc')->paginate(200) ;
+        $schedule = Schedule::where('court_id',$id)->with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->paginate(200) ;
         $prices = Price::all();
 
         return [
@@ -120,6 +120,17 @@ class CourtsController extends Controller
         //     'areas' =>$areas,
         //     'destinations' =>$destinations
         //     ];
+        $court = Court::
+        find($id);
+        $schedule = Schedule::where('court_id',$id)->with('court')->with('price.coin')->with('status')->orderBy('date','desc')->paginate(200) ;
+        $prices = Price::all();
+
+        return [
+            'court'=>$court,
+            'schedule'=>$schedule,
+            'prices'=>$prices
+        
+        ];
     }
 
     /**
@@ -130,52 +141,17 @@ class CourtsController extends Controller
         //
 
         $data = $request->all();
-        $user = Court::find($id);
+        $court = Court::find($id);
 
-        $request->validate([
-            'firstName' =>'required',
-            'lastName' =>'required',
-            'address' =>'required',
-            'code' =>'required',
-            'bi' =>'required',
-            'mobile' =>'required|min:9',
-            'cellphone' =>'required|min:9',
-            'signature' =>'required',
-            'area_id' =>'sometimes',
-            'destination_id' =>'sometimes',
-            'province_id' =>'required',
-            'city_id' =>'required',
-            'user_status_id' =>'required',
-            'role_id' =>'sometimes',
-            'account_status_id' =>'required',
-            'email' =>'required|unique:courts,email,'.$user->id,
-            'password' =>'sometimes|min:8',
-        ]);
+        $court->update($data);
 
-        
 
-        $user->update([
-            'firstName' => $data['firstName'],
-            'lastName' => $data['lastName'],
-            'address' => $data['address'],
-            'code' => $data['code'],
-            'bi' => $data['bi'],
-            'mobile' => $data['mobile'],
-            'cellphone' => $data['cellphone'],
-            'signature' => $data['signature'],
-            'area_id' => request('area_id') ? $data['area_id'] : $user->area_id,
-            'destination_id' => request('destination_id') ? $data['area_id'] :  $user->destination_id,
-            'country_id' => 1,
-            'province_id' => $data['province_id'],
-            'city_id' => $data['city_id'],
-            'user_status_id' => $data['user_status_id'],
-            'role_id' => $data['role_id'],
-            'account_status_id' => $data['account_status_id'],
-            'email' => strtolower($data['email']),
-            'password' => request('password') ? bcrypt($data['password']) : $user->password
-        ]);
 
-        return $user;
+       
+
+        return response()->json([
+            'court'=>$court
+        ],200);
     }
 
     /**
@@ -184,13 +160,37 @@ class CourtsController extends Controller
     public function destroy(string $id)
     {
         //
-        $user = Court::find($id);
+        $court = Court::find($id);
 
-        if(Auth::user()->id == $user->id){
-            return abort(402,'Erro') ;
+        $schedules = Schedule::where('court_id',$id)->get();
+
+        if($schedules->count() > 0){
+            return response()->json(
+                [
+            'message'=>'O court não pode ser apagado porque está em uso'
+            ],402);
         }
-        $user->delete();
+
+        $court->delete();
 
         return response()->noContent();
+    }
+
+    public function updatecourtschedule($date,$id){
+        
+
+        $court = Court::
+        find($id);
+        $schedule = Schedule::where('court_id',$id)->with('court')->with('price.coin')->with('status')->where('date',$date)->orderBy('start_time','asc')->paginate(200);
+        $prices = Price::all();
+
+        return [
+            'court'=>$court,
+            'schedule'=>$schedule,
+            'prices'=>$prices
+        
+        ];
+
+        
     }
 }

@@ -22,12 +22,10 @@
 		<link rel="stylesheet" href="{{asset('template1/assets/css/style.css')}}">
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="{{asset('template1/assets/js/html5shiv.min.js')}}"></script>
-			<script src="{{asset('template1/assets/js/respond.min.js')}}"></script>
-		<![endif]-->
-        <script src="{{asset('template1/assets/js/html5shiv.min.js')}}"></script>
-			<script src="{{asset('template1/assets/js/respond.min.js')}}"></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha512-UDJtJXfzfsiPPgnI5S1000FPLBHMhvzAMX15I+qG2E2OAzC9P1JzUwJOfnypXiOH7MRPaqzhPbBGDNNj7zBfoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {{-- <script src="{{asset('template1/assets/js/html5shiv.min.js')}}"></script>
+			<script src="{{asset('template1/assets/js/respond.min.js')}}"></script> --}}
         {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> --}}
 	    @vite(['resources/css/app.css', 'resources/js/app.js'])
 	
@@ -227,11 +225,12 @@
 	   <!-- /Main Wrapper -->
 	  
 		<!-- jQuery -->
-		<script src="{{asset('template1/assets/js/jquery.min.js')}}')}}"></script>
+		{{-- <script src="{{asset('template1/assets/js/jquery.min.js')}}')}}"></script> --}}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		
 		<!-- Bootstrap Core JS -->
-		<script src="{{asset('template1/assets/js/popper.min.js')}}')}}"></script>
-		<script src="{{asset('template1/assets/js/bootstrap.min.js')}}')}}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 		
 		<!-- Slick JS -->
 		<script src="{{asset('template1/assets/js/slick.js')}}"></script>

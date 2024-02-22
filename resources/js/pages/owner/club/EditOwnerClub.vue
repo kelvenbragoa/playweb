@@ -18,6 +18,8 @@ const toastr = useToastr();
 const router = useRouter();
 let self = this;
 let currentvalue = ref([]);
+let provinces = ref([]);
+
 const schema = yup.object({
   name: yup.string().required(),
 });
@@ -33,7 +35,8 @@ const getData = () => {
        .then((response)=>{
 
         loadingDiv.value=false;
-        retrievedData.value = response.data;
+        retrievedData.value = response.data.club;
+        provinces.value = response.data.provinces;
 
        }).catch(()=>{
 
@@ -51,7 +54,7 @@ const editFunction = (values, actions) => {
     // $('#createCategory').modal('hide');
     actions.resetForm();
     router.push({ path: '/owner/club' });
-    toastr.success('Marca editada com sucesso');
+    toastr.success('Clube editado com sucesso');
 
   }).catch((error)=>{
 
@@ -122,6 +125,17 @@ onMounted(()=>{
                                                                 <label class="form-label" for="min_price">Preço Minimo</label>
                                                                 <Field type="text" class="form-control" :class="{'is-invalid':errors.min_price}" name="min_price" v-model="retrievedData.min_price" id="min_price" placeholder="Nome"/>
                                                                 <span class="invalid-feedback">{{ errors.min_price }}</span>
+                                                            </div>
+                                                        </div>
+												
+                                                        <div class="row">
+                                                            <div class="mb-3 col-md-12">
+                                                                <label class="form-label" for="province_id">Provincia</label>
+                                                                <Field as="select" class="form-control" :class="{'is-invalid':errors.province_id}" name="province_id" v-model="retrievedData.province_id" id="province_id" placeholder="Provincia">
+                                                                    <option value="" disabled>Selecionar</option>
+                                                                    <option v-for="province in provinces" :key="province.id" :value="province.id">{{ province.name }}</option>
+                                                                </Field>
+                                                                <span class="invalid-feedback">{{ errors.province_id }}</span>
                                                             </div>
                                                         </div>
 												

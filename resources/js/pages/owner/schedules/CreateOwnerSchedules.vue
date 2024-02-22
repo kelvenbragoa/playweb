@@ -15,13 +15,13 @@ const loading = ref(false);
 const toastr = useToastr();
 const loadingDiv = ref(true);
 let currentvalue = ref([]);
-let provinces =ref([]);
+let coins =ref([]);
 const schema = yup.object({
     
   name: yup.string().required(),
 //   address: yup.string().required(),
-  image_url: yup.string().required(),
-  description: yup.string().required(),
+  price: yup.number().required(),
+//   description: yup.string().required(),
 //   province_id: yup.string().required(),
  
 });
@@ -37,13 +37,13 @@ const createRecordFunction = (values, actions) => {
 
     const arr = Array.from(values)
     
-    axios.post('/owner-courts',values).then((response)=>{
+    axios.post('/owner-prices',values).then((response)=>{
 
     // categories.value.unshift(response.data);
     // $('#createCategory').modal('hide');
     actions.resetForm();
-    router.push({ path: '/owner/courts' });
-    toastr.success('Área criada com sucesso');
+    router.push({ path: '/owner/prices' });
+    toastr.success('Registro criado com sucesso');
   }).catch((error)=>{
     
     loading.value = false;
@@ -66,7 +66,7 @@ const getAuxiliarData = () => {
 axios.get('/auxiliar-create-schedule')
      .then((response)=>{
 
-      provinces.value = response.data.provinces;
+      coins.value = response.data.coins;
       
 
       loadingDiv.value=false;
@@ -77,7 +77,7 @@ axios.get('/auxiliar-create-schedule')
      })
      .catch((error)=>{
       toastr.error(error);
-      router.push({ path: '/admin/users' });
+      router.push({ path: '/owner/prices' });
      })
 }
 
@@ -90,15 +90,15 @@ onMounted(()=>{
 
 <template>
     <div v-if="!loadingDiv">
-        <h1 class="h3 mb-3">Quadra</h1>
+        <h1 class="h3 mb-3">Preços</h1>
         
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Formulário criação das Quadras do sistema.</h5>
+                                        <h5 class="card-title">Formulário criação dos Preços do sistema.</h5>
 
-                                        <router-link to="/owner/courts" class="btn btn-pill btn-primary mt-3"><vue-feather type="arrow-left"></vue-feather>Voltar</router-link> 
+                                        <router-link to="/owner/prices" class="btn btn-pill btn-primary mt-3"><vue-feather type="arrow-left"></vue-feather>Voltar</router-link> 
 
                                        
 								    </div>
@@ -115,19 +115,26 @@ onMounted(()=>{
 
                                                 <div class="row">
 													<div class="mb-3 col-md-12">
-														<label class="form-label" for="image_url">URL Imagem</label>
-														<Field type="text" class="form-control" :class="{'is-invalid':errors.image_url}" name="image_url" id="image_url" placeholder="Image URL"/>
-                                                        <span class="invalid-feedback">{{ errors.image_url }}</span>
+														<label class="form-label" for="price">Valor</label>
+														<Field type="number" class="form-control" :class="{'is-invalid':errors.price}" name="price" id="price" placeholder="Valor"/>
+                                                        <span class="invalid-feedback">{{ errors.price }}</span>
 													</div>
 												</div>
 
-                                                <div class="row">
+                                                <!-- <div class="row">
+													<div class="mb-3 col-md-12">
+														<label class="form-label" for="address">Endereço</label>
+														<Field type="text" class="form-control" :class="{'is-invalid':errors.address}" name="address" id="address" placeholder="Endereço"/>
+                                                        <span class="invalid-feedback">{{ errors.address }}</span>
+													</div>
+												</div> -->
+                                                <!-- <div class="row">
 													<div class="mb-3 col-md-12">
 														<label class="form-label" for="description">Descrição</label>
 														<Field type="text" class="form-control" :class="{'is-invalid':errors.description}" name="description" id="description" placeholder="Endereço"/>
                                                         <span class="invalid-feedback">{{ errors.description }}</span>
 													</div>
-												</div>
+												</div> -->
 
                                                 <!-- <div class="row">
 													<div class="mb-3 col-md-12">
@@ -141,7 +148,7 @@ onMounted(()=>{
 														<label class="form-label" for="province_id">Província</label>
 														<Field as="select" class="form-control" :class="{'is-invalid':errors.province_id}"  name="province_id" id="province_id" aria-describedby="province_id">
                                                             <option value="" disabled>Selecionar</option>
-                                                            <option v-for="province in provinces" :key="province.id" :value="province.id">{{ province.name }}</option>
+                                                            <option v-for="province in coins" :key="province.id" :value="province.id">{{ province.name }}</option>
                                                         </Field>
                                                         <span class="invalid-feedback">{{ errors.province_id }}</span>
 													</div>

@@ -9,4 +9,8 @@ class Price extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function coin(){
+        return $this->hasOne('App\Models\Coin','id','coin_id');
+    }
 }

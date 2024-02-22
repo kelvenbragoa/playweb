@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Club;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,8 +52,12 @@ class ClubController extends Controller
     {
         //
         $club = Club::find($id);
+        $provinces = Province::get();
 
-        return $club;
+        return [
+            'club'=>$club,
+            'provinces'=>$provinces
+        ];
 
 
     }

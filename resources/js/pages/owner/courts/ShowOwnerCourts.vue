@@ -10,11 +10,14 @@ import { useRouter} from "vue-router";
 import * as yup from 'yup';
 import VueFeather from 'vue-feather';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
+import VCalendar from 'v-calendar';
+import { Calendar, DatePicker } from 'v-calendar';
 
 let retrievedData =ref([]);
 let scheduleData = ref([])
 let loadingSubmit =ref([true]);
 let loadingDiv =ref([true]);
+let loadingBody =ref([false]);
 const router = useRouter();
 let self = this;
 let searchQuery = ref(null)
@@ -23,6 +26,7 @@ const loading = ref(false);
 let prices =ref([]);
 let currentvalue = ref([]);
 const toastr = useToastr();
+const selectedDate = ref(null);
 const schema = yup.object({
 
     
@@ -54,6 +58,27 @@ watch(searchQuery,debounce(()=>{
     getData();
 },300));
 
+watch(selectedDate,()=>{
+    loadingBody.value=true;
+    var newDate = moment(selectedDate.value).format('Y-MM-D')
+    // alert(newDate)
+    console.log(loadingBody.value)
+    axios.get(`/updatecourtschedule/${newDate}/${router.currentRoute.value.params.id}`)
+    .then((response)=>{
+        
+        retrievedData.value = response.data.court;
+        scheduleData.value = response.data.schedule;
+        prices.value = response.data.prices;
+        loadingBody.value=false;
+        console.log(loadingBody.value)
+        
+    
+    }).catch(()=>{
+        loadingBody.value=false;
+    })
+    loadingBody.value=false;
+})
+
 const createRecordFunction = (values, actions) => {
 
  
@@ -84,9 +109,9 @@ loading.value = false;
 
 })
 
-
-
 };
+
+
 
 onMounted(()=>{
   
@@ -125,58 +150,74 @@ onMounted(()=>{
                                                     </a>
                                                     <div class="collapse mt-3" id="collapseExample">
                                                         <div class="card-body">
-                                            <Form @submit="createRecordFunction" :validation-schema="schema" v-slot="{ errors }">
-												<div class="row">
-													<div class="mb-3 col-md-12">
-														<label class="form-label" for="name">Data</label>
-														<Field type="date" class="form-control" :class="{'is-invalid':errors.date}" name="date" id="date" placeholder="Data"/>
-                                                        <Field type="hidden" class="form-control" :class="{'is-invalid':errors.court_id}" name="court_id" id="date" v-model="retrievedData.id" placeholder="Data"/>
-                                                        <span class="invalid-feedback">{{ errors.date }}</span>
-													</div>
-												</div>
+                                                            <Form @submit="createRecordFunction" :validation-schema="schema" v-slot="{ errors }">
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="name">Data</label>
+                                                                        <Field type="date" class="form-control" :class="{'is-invalid':errors.date}" name="date" id="date" placeholder="Data"/>
+                                                                        <Field type="hidden" class="form-control" :class="{'is-invalid':errors.court_id}" name="court_id" id="date" v-model="retrievedData.id" placeholder="Data"/>
+                                                                        <span class="invalid-feedback">{{ errors.date }}</span>
+                                                                    </div>
+                                                                </div>
 
-                                                <div class="row">
-													<div class="mb-3 col-md-12">
-														<label class="form-label" for="start_time">Horas de Inicio</label>
-														<Field type="time" class="form-control" :class="{'is-invalid':errors.date}" name="start_time" id="start_time" placeholder="Horas de inicio"/>
-                                                        <span class="invalid-feedback">{{ errors.start_time }}</span>
-													</div>
-												</div>
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="start_time">Horas de Inicio</label>
+                                                                        <Field type="time" class="form-control" :class="{'is-invalid':errors.date}" name="start_time" id="start_time" placeholder="Horas de inicio"/>
+                                                                        <span class="invalid-feedback">{{ errors.start_time }}</span>
+                                                                    </div>
+                                                                </div>
 
-                                                <div class="row">
-													<div class="mb-3 col-md-12">
-														<label class="form-label" for="end_time">Horas de Fim</label>
-														<Field type="time" class="form-control" :class="{'is-invalid':errors.end_time}" name="end_time" id="end_time" placeholder="Horas de Fim"/>
-                                                        <span class="invalid-feedback">{{ errors.end_time }}</span>
-													</div>
-												</div>
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="end_time">Horas de Fim</label>
+                                                                        <Field type="time" class="form-control" :class="{'is-invalid':errors.end_time}" name="end_time" id="end_time" placeholder="Horas de Fim"/>
+                                                                        <span class="invalid-feedback">{{ errors.end_time }}</span>
+                                                                    </div>
+                                                                </div>
 
-    
+                    
 
-                                                <div class="row">
-													<div class="mb-3 col-md-12">
-														<label class="form-label" for="price_id">Preço</label>
-														<Field as="select" class="form-control" :class="{'is-invalid':errors.price_id}"  name="price_id" id="price_id" aria-describedby="price_id">
-                                                            <option value="" disabled>Selecionar</option>
-                                                            <option v-for="price in prices" :key="price.id" :value="price.id">{{ price.name }}</option>
-                                                        </Field>
-                                                        <span class="invalid-feedback">{{ errors.price_id }}</span>
-													</div>
-												</div>
-												
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="price_id">Preço</label>
+                                                                        <Field as="select" class="form-control" :class="{'is-invalid':errors.price_id}"  name="price_id" id="price_id" aria-describedby="price_id">
+                                                                            <option value="" disabled>Selecionar</option>
+                                                                            <option v-for="price in prices" :key="price.id" :value="price.id">{{ price.name }}</option>
+                                                                        </Field>
+                                                                        <span class="invalid-feedback">{{ errors.price_id }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                
 
-                                                
+                                                                
 
-                                                
-                                               
-												<button type="submit" class="btn btn-primary" :disabled="loading">
-                                                    <div v-if="loading" class="spinner-border spinner-border-sm" role="status"></div>
-                                                    <span v-else>Submeter</span>
-                                                </button>
-											</Form>
+                                                                
+                                                            
+                                                                <button type="submit" class="btn btn-primary" :disabled="loading">
+                                                                    <div v-if="loading" class="spinner-border spinner-border-sm" role="status"></div>
+                                                                    <span v-else>Submeter</span>
+                                                                </button>
+                                                            </Form>
 
-										</div>
+                                                        </div>
                                                     </div>
+                                                    <div class="m-4">
+                                                        <DatePicker v-model="selectedDate" view="weekly" expanded/>
+                                                    </div>
+                                                    
+                                                    <div v-if="loadingBody=false">
+                                                        <div class="d-flex justify-content-center">
+                                                            <div class="spinner-border" role="status">
+                                                                <span class="sr-only"></span>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="d-flex justify-content-center">
+                                                            Carregando Dados...
+                                                        </div>
+                                                    </div>
+                                                    <div v-if="loadingBody=true">
                                                     <div class="table-responsive">
                                                         <table class="table table-striped">
                                                             <thead>
@@ -198,12 +239,12 @@ onMounted(()=>{
                                                                     <td>{{ actualData.date}}</td>
                                                                     <td>{{ actualData.start_time}}</td>
                                                                     <td>{{ actualData.end_time}}</td>
-                                                                    <td>{{ actualData.price.name}}</td>
-                                                                    <td><span class="badge bg-success" v-if="actualData.status_id == 1">{{ actualData.status.name }}</span> <span class="badge bg-warning" v-if="actualData.status_id == 2">{{ actualData.status.name }}</span> <span class="badge bg-danger" v-if="actualData.status_id == 3">{{ actualData.status.name }}</span> </td>
+                                                                    <td>{{ actualData.price.name+'( '+actualData.price.price +actualData.price.coin.symbol+' )'}}</td>
+                                                                    <td><span class="badge bg-success" v-if="actualData.status_id == 1">{{ actualData.status.name+'('+actualData.players_count+')' }}</span> <span class="badge bg-warning" v-if="actualData.status_id == 2">{{ actualData.status.name+'('+actualData.players_count+')' }}</span> <span class="badge bg-danger" v-if="actualData.status_id == 3">{{ actualData.status.name+'('+actualData.players_count+')' }}</span> </td>
                                                                     
                                                                     <td>
                                                                         <!-- <router-link :to="'/admin/schedules/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link> -->
-                                                                        <router-link :to="'/admin/schedules/'+actualData.id"><vue-feather type="eye"></vue-feather></router-link> 
+                                                                        <router-link :to="'/owner/schedules/'+actualData.id"><vue-feather type="eye"></vue-feather></router-link> 
                                                                         <!-- <a href="#" @click.prevent="confirmDeletion(actualData)"><vue-feather type="trash"></vue-feather></a> -->
                                                                         
                                                                     </td>
@@ -217,6 +258,7 @@ onMounted(()=>{
                                                         </table>
                                                     </div>
                                                     <Bootstrap4Pagination :data="scheduleData" @pagination-change-page="getData"/>
+                                                </div>
                                                   
                                                 </div>
                                             </div>
