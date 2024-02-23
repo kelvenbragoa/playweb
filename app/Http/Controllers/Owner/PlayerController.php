@@ -60,6 +60,7 @@ class PlayerController extends Controller
             $player = Player::create([
                 'user_id'=>$data['user_id'],
                 'schedule_id'=>$data['schedule_id'],
+                'owner_id'=>$schedule->owner_id
             ]);
             $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
             if($lotation>=4){

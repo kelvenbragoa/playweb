@@ -49,7 +49,11 @@ class PlayerController extends Controller
                 'status_id'=>2
             ]);
             
-            $player = Player::create($data);
+            $player = Player::create([
+                'user_id'=>$data['user_id'],
+                'schedule_id'=>$data['schedule_id'],
+                'owner_id'=>$schedule->owner_id
+            ]);
             $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
             if($lotation>=4){
                 $schedule->update([
