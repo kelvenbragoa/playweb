@@ -39,6 +39,11 @@ import CreateOwnerPrices from './pages/owner/prices/CreateOwnerPrices.vue';
 import ShowOwnerPrices from './pages/owner/prices/ShowOwnerPrices.vue';
 import EditOwnerPrices from './pages/owner/prices/EditOwnerPrices.vue';
 
+import IndexOwnerRecharges from './pages/owner/recharges/IndexOwnerRecharges.vue';
+import CreateOwnerRecharges from './pages/owner/recharges/CreateOwnerRecharges.vue';
+import ShowOwnerRecharges from './pages/owner/recharges/ShowOwnerRecharges.vue';
+import EditOwnerRecharges from './pages/owner/recharges/EditOwnerRecharges.vue';
+
 import IndexOwnerSchedules from './pages/owner/schedules/IndexOwnerSchedules.vue';
 import CreateOwnerSchedules from './pages/owner/schedules/CreateOwnerSchedules.vue';
 import ShowOwnerSchedules from './pages/owner/schedules/ShowOwnerSchedules.vue';
@@ -230,6 +235,28 @@ export default [
         path: '/owner/prices/:id/edit',
         name: 'owner.prices.edit',
         component: EditOwnerPrices,
+    },
+
+     //recharge
+     {
+        path: '/owner/recharges',
+        name: 'owner.recharges.index',
+        component: IndexOwnerRecharges,
+    },
+    {
+        path: '/owner/recharges/create',
+        name: 'owner.recharges.create',
+        component: CreateOwnerRecharges,
+    },
+    {
+        path: '/owner/recharges/:id',
+        name: 'owner.recharges.show',
+        component: ShowOwnerRecharges,
+    },
+    {
+        path: '/owner/recharges/:id/edit',
+        name: 'owner.recharges.edit',
+        component: EditOwnerRecharges,
     },
 
      //schedules

@@ -58,6 +58,12 @@
 					</li>
 
 					<li class="sidebar-item">
+						<router-link class="sidebar-link" to="/owner/recharges">
+							<i class="align-middle" data-feather="activity"></i> <span class="align-middle">Recargas</span>
+						</router-link>
+					</li>
+
+					<li class="sidebar-item">
 						<router-link class="sidebar-link" to="/owner/club">
 							<i class="align-middle" data-feather="box"></i> <span class="align-middle">Meu Clube</span>
 						</router-link>
