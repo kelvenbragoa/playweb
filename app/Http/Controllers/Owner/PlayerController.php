@@ -51,7 +51,7 @@ class PlayerController extends Controller
                 'message'=>'You have reached the limit of 4 players per schedule',
                 'schedule' => $schedule2,
                 'playersData'=>$playersData2
-            ],200);
+            ],400);
         }else{
             $schedule->update([
                 'status_id'=>2
