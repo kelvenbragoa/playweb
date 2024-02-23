@@ -10,6 +10,8 @@ const loadingDiv = ref(true);
 const users = ref(0)
 const courts = ref(0)
 const schedules = ref(0)
+
+const courtData = ref([])
 // const centercosts = ref(0)
 // const typeequipments = ref(0)
 // const malfunctions = ref(0)
@@ -26,6 +28,7 @@ const getDashboardData = () =>{
         users.value = response.data.users
         courts.value = response.data.courtsowner
         schedules.value = response.data.schedulesowner
+        courtData.value = response.data.courtData
         // centercosts.value = response.data.centercosts
         // typeequipments.value = response.data.typeequipments
         // malfunctions.value = response.data.malfunctions
@@ -159,6 +162,35 @@ onUpdated(()=>{
                                                 </div>
                                             </div> -->
                                         </div>
+
+                                        <hr>
+                                        <div class="row">
+                                                        <div class="col-12 col-lg-6" v-for="court in courtData" :key="court.id">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5 class="card-title">{{ court.name }} (<small>{{ moment().format('DD-MM-YYYY') }}</small>)</h5>
+                                                                    
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="chart">
+                                                                        <div class="row">
+                                                                            <div class="col-4 col-lg-4 mb-2" v-for="schedule in court.schedules" :key="schedule.id">
+                                                                                <router-link
+                                                                                    :to="'/owner/schedules/' + schedule.id">
+                                                                                <span class="badge bg-success" v-if="schedule.status_id==1">{{schedule.start_time}} - {{schedule.end_time}}</span>
+                                                                                <span class="badge bg-warning" v-if="schedule.status_id==2">{{schedule.start_time}} - {{schedule.end_time}}</span>
+                                                                                <span class="badge bg-danger" v-if="schedule.status_id==3">{{schedule.start_time}} - {{schedule.end_time}}</span>
+                                                                            </router-link>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                       
+                                                    </div>
 
                                         <!-- <div class="row">
                                             <div class="col-sm-6 col-xl-3">

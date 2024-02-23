@@ -32,12 +32,20 @@ class DashboardDataController extends Controller
         ];
     }
 
+
+
+
+
+
+
+
     public function index(){
         $users=User::count();
         $courts=Court::count();
         $schedules=Schedule::count();
 
         $courtsowner = Court::where('owner_id',Auth::user()->id)->count();
+        $courtData= Court::where('owner_id',Auth::user()->id)->with('schedules')->get();
         $schedulesowner = Schedule::where('owner_id',Auth::user()->id)->where('status_id','!=',1)->where('date',date('Y-m-d'))->count();
        
 
@@ -48,7 +56,9 @@ class DashboardDataController extends Controller
             'courts' => $courts,
             'schedules' => $schedules,
             'courtsowner'=>$courtsowner,
-            'schedulesowner'=>$schedulesowner
+            'schedulesowner'=>$schedulesowner,
+
+            'courtData'=>$courtData,
         ];
     }
 }

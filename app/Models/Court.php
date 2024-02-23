@@ -13,4 +13,10 @@ class Court extends Model
     public function club(){
         return $this->hasOne('App\Models\Club','id','club_id');
     }
+
+    public function schedules(){
+        return $this->hasMany('App\Models\Schedule','court_id','id')->where('date',date('Y-m-d'));
+    }
+
+
 }
