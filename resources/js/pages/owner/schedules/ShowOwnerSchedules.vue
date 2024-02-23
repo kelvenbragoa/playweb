@@ -24,10 +24,11 @@ let users =ref([]);
 let currentvalue = ref([]);
 const toastr = useToastr();
 let playersData = ref([]);
+let systemUser = ref(1);
 const schema = yup.object({
 
     
-    user_id: yup.string().required(),
+    // user_id: yup.string().required(),
    
   });
 
@@ -64,6 +65,10 @@ const getUsers = () => {
       })
        .then((response)=>{
         users.value = response.data;
+        tempValues = users.filter((item) => {
+        return (item.role_id == 3)
+        })
+        users.value = tempValues
        
        }).catch(()=>{
        })
@@ -149,9 +154,40 @@ onMounted(()=>{
                                                             <Form @submit="createRecordFunction" :validation-schema="schema" v-slot="{ errors }">
                                                                
 
-                
-
                                                                 <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="user">Usuário do sistema?</label>
+                                                                        <Field as="select" class="form-control" :class="{'is-invalid':errors.user}" name="system" v-model="systemUser" id="system">
+                                                                            <option value="2">Sim</option>
+                                                                            <option value="1">Não</option>
+                                                                        </Field>
+                                                                        
+                                                                        <span class="invalid-feedback">{{ errors.user }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div v-if="systemUser == 1">
+                                                                    <div class="row">
+                                                                        <div class="mb-3 col-md-12">
+                                                                            <label class="form-label" for="user">Nome</label>
+                                                                            <Field type="text" class="form-control" :class="{'is-invalid':errors.user}" name="name" id="name" placeholder="Nome"/>
+                                                                            <Field type="hidden" class="form-control" :class="{'is-invalid':errors.schedule_id}" name="schedule_id" v-model="retrievedData.id" id="schedule_id"/>
+                                                                            <span class="invalid-feedback">{{ errors.user }}</span>
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-12">
+                                                                            <label class="form-label" for="email">Email</label>
+                                                                            <Field type="text" class="form-control" :class="{'is-invalid':errors.email}" name="email" id="email" placeholder="Email"/>
+                                                                            <span class="invalid-feedback">{{ errors.email }}</span>
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-12">
+                                                                            <label class="form-label" for="mobile">Telefone</label>
+                                                                            <Field type="text" class="form-control" :class="{'is-invalid':errors.mobile}" name="mobile" id="mobile" placeholder="Nome"/>
+                                                                            <span class="invalid-feedback">{{ errors.user }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div v-if="systemUser == 2">
+                                                                    <div class="row">
                                                                     <div class="mb-3 col-md-12">
                                                                         <label class="form-label" for="user">Procure pelo Nome, Email ou Telefone do Jogador</label>
                                                                         <Field type="text" class="form-control" :class="{'is-invalid':errors.user}" name="user" v-model="searchQuery" id="user" placeholder="Nome, Email ou Telefone"/>
@@ -173,6 +209,8 @@ onMounted(()=>{
                                                                         <span class="invalid-feedback">{{ errors.user_id }}</span>
                                                                     </div>
                                                                 </div>
+                                                                </div>
+                                                                
                                                                 
 
                                                                 
@@ -205,9 +243,10 @@ onMounted(()=>{
                                                             <tbody v-if="playersData.data.length > 0">
                                                                 <tr  v-for="(actualData,index) in playersData.data" :key="actualData.id">
                                                                     <td>#{{ index + 1 }}</td>
-                                                                    <td>{{ actualData.user.name}} {{ actualData.user.surname}}</td>
-                                                                    <td>{{ actualData.user.mobile}}</td>
-                                                                    <td>{{ actualData.user.email}}</td>
+                                                                    <!-- <td>{{ actualData.user.name}} {{ actualData.user.surname}}</td> -->
+                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.name : actualData.user.name+' '+actualData.user.surname }}</td>
+                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.mobile :actualData.user.mobile}}</td>
+                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.email : actualData.user.email}}</td>
                                                                     <td>{{ actualData.obs}}</td>
                                                                     <td>{{ moment(actualData.created_at).format('DD-MM-YYYY H:mm')}}</td>
                                                                     <td>#{{ actualData.transaction == null ? '' : actualData.transaction.id}}</td>

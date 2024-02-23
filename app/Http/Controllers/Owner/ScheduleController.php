@@ -135,7 +135,6 @@ class ScheduleController extends Controller
                 ->orWhere('surname','like',"%{$searchQuery}%")
                 ->orWhere('mobile','like',"%{$searchQuery}%")
                 ->orWhere('email','like',"%{$searchQuery}%")
-                
                 ;
             })
             
