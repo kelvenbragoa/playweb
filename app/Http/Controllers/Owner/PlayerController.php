@@ -74,14 +74,15 @@ class PlayerController extends Controller
 
             $user = User::find($data['user_id']);
 
-            $user->update([
-                'balance'=>$user->balance - $schedule->price->price
-            ]);
+            // $user->update([
+            //     'balance'=>$user->balance - $schedule->price->price
+            // ]);
             $transaction = Transaction::create([
                 'user_id'=> $user->id,
                 'type_transaction_id'=> 1,
                 'amount'=> $schedule->price->price,
-                'balance'=> $user->balance-$schedule->price->price,
+                // 'balance'=> $user->balance-$schedule->price->price,
+                'balance'=> $user->balance,
                 'method'=> 'INTERNAL',
                 'schedule_id'=>$schedule->id,
                 'player_id'=>$player->id
