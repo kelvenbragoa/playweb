@@ -92,14 +92,14 @@ class WalletController extends Controller
         $string = substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(3/strlen($x)) )),1,3);
         $ref = 'PADEL'.$string.$reference+1;
 
-        if($user->balance<$amount){
-            return response()->json(
-                [
-                    'message'=>'Saldo insuficiente',
-                ],
-                401
-            );
-        }
+        // if($user->balance<$amount){
+        //     return response()->json(
+        //         [
+        //             'message'=>'Saldo insuficiente',
+        //         ],
+        //         401
+        //     );
+        // }
      
 
         $c2b = $transactionmpesa->c2b(
