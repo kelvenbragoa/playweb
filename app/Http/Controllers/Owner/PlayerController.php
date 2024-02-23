@@ -39,11 +39,19 @@ class PlayerController extends Controller
         $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
         $schedule = Schedule::find($data['schedule_id']);
 
+        $schedule2 = Schedule::with('court')->with('price.coin')->with('status')->findOrFail($data['schedule_id']);
+        $playersData2 = Player::where('schedule_id',$data['schedule_id'])->with('user')->with('transaction')->paginate(200);
+
         if($lotation>=4){
+            // return response()->json([
+            //  'status'=>400,
+            //  'message'=>'You have reached the limit of 4 players per schedule'
+            // ]);
             return response()->json([
-             'status'=>400,
-             'message'=>'You have reached the limit of 4 players per schedule'
-            ]);
+                'message'=>'You have reached the limit of 4 players per schedule',
+                'schedule' => $schedule2,
+                'playersData'=>$playersData2
+            ],200);
         }else{
             $schedule->update([
                 'status_id'=>2
