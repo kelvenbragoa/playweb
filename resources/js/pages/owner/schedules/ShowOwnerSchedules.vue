@@ -80,7 +80,7 @@ loading.value = true;
 
 const arr = Array.from(values)
 
-axios.post('/owner-schedules',values).then((response)=>{
+axios.post('/owner-players',values).then((response)=>{
 
 // categories.value.unshift(response.data);
 // $('#createCategory').modal('hide');

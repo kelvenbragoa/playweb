@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('limit');
             $table->integer('club_id');
             $table->text('description');
+            $table->integer('owner_id');
             $table->timestamps();
         });
     }

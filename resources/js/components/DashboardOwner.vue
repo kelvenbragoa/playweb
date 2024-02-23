@@ -3,6 +3,7 @@
 import {onMounted, ref, reactive, onUpdated} from 'vue';
 import axios from 'axios';
 import VueFeather from 'vue-feather';
+import moment from 'moment'
 
 
 const loadingDiv = ref(true);
@@ -116,7 +117,8 @@ onUpdated(()=>{
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col mt-0">
-                                                                <h5 class="card-title">Reservas para hoje</h5>
+                                                                <h5 class="card-title">Reservas para hoje <small>{{ moment().format('DD-MM-YYYY') }}</small></h5>
+                                                                
                                                             </div>
 
                                                             <div class="col-auto">

@@ -11,7 +11,7 @@ import VueFeather from 'vue-feather';
 const toastr = useToastr();
 const searchQuery = ref(null);
 const loadingDiv = ref(true);
-const loadingButtonDelete = ref(false);
+const loadingButtonDelete = ref([false]);
 
 
 

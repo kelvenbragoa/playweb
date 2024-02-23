@@ -44,7 +44,7 @@ import {reactive, ref} from 'vue';
         .catch((error)=>{
 
 
-          errorMessage.value = error
+          errorMessage.value = error.response.data.message
           
         })
         .finally(()=>{

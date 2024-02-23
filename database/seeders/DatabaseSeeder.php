@@ -61,24 +61,24 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-        DB::table('prices')->insert([
-            [
-                'id'=>1,
-                'name'=>'Normal',
-                'price'=>750,
-                'coin_id'=>1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>2,
-                'name'=>'Horário Nobre',
-                'price'=>850,
-                'coin_id'=>1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-        ]);
+        // DB::table('prices')->insert([
+        //     [
+        //         'id'=>1,
+        //         'name'=>'Normal',
+        //         'price'=>750,
+        //         'coin_id'=>1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>2,
+        //         'name'=>'Horário Nobre',
+        //         'price'=>850,
+        //         'coin_id'=>1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        // ]);
 
         DB::table('statuses')->insert([
             [
@@ -133,162 +133,162 @@ class DatabaseSeeder extends Seeder
                 'created_at'=>now(),
                 'updated_at'=>now()
             ],
-            [
-                'id'=>2,
-                'name'=>'User',
-                'surname'=>'Club Owner',
-                'mobile'=>'842648617',
-                'birth_date'=>'1998/09/18',
-                'gender_id'=>1,
-                'role_id'=>2,
-                'email'=>'owner@test.com',
-                'password'=>static::$password ??= Hash::make('password'),
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>3,
-                'name'=>'User',
-                'surname'=>'Normal',
-                'mobile'=>'842648617',
-                'birth_date'=>'1998/09/18',
-                'gender_id'=>1,
-                'role_id'=>3,
-                'email'=>'user@test.com',
-                'password'=>static::$password ??= Hash::make('password'),
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
+            // [
+            //     'id'=>2,
+            //     'name'=>'User',
+            //     'surname'=>'Club Owner',
+            //     'mobile'=>'842648617',
+            //     'birth_date'=>'1998/09/18',
+            //     'gender_id'=>1,
+            //     'role_id'=>2,
+            //     'email'=>'owner@test.com',
+            //     'password'=>static::$password ??= Hash::make('password'),
+            //     'created_at'=>now(),
+            //     'updated_at'=>now()
+            // ],
+            // [
+            //     'id'=>3,
+            //     'name'=>'User',
+            //     'surname'=>'Normal',
+            //     'mobile'=>'842648617',
+            //     'birth_date'=>'1998/09/18',
+            //     'gender_id'=>1,
+            //     'role_id'=>3,
+            //     'email'=>'user@test.com',
+            //     'password'=>static::$password ??= Hash::make('password'),
+            //     'created_at'=>now(),
+            //     'updated_at'=>now()
+            // ],
         ]);
         
         
 
-        DB::table('clubs')->insert([
-            [
-                'id'=>1,
-                'name'=>'Club Padel Beira',
-                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                'user_id'=>'2',
-                'description'=>'Club de Padel da cidade da Beira',
-                'address'=>'Rua do Estoril',
-                'province_id'=>'1',
-                'min_price'=>'600.00',
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-        ]);
+        // DB::table('clubs')->insert([
+        //     [
+        //         'id'=>1,
+        //         'name'=>'Club Padel Beira',
+        //         'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        //         'user_id'=>'2',
+        //         'description'=>'Club de Padel da cidade da Beira',
+        //         'address'=>'Rua do Estoril',
+        //         'province_id'=>'1',
+        //         'min_price'=>'600.00',
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        // ]);
 
-        DB::table('courts')->insert([
-            [
-                'id'=>1,
-                'name'=>'Quadra 1',
-                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                'limit'=>'4',
-                'club_id'=>'1',
-                'description'=>'Quadra de jogo de padel 1',
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>2,
-                'name'=>'Quadra 2',
-                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                'limit'=>'4',
-                'club_id'=>'1',
-                'description'=>'Quadra de jogo de padel 2',
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>3,
-                'name'=>'Quadra 3',
-                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                'limit'=>'4',
-                'club_id'=>'1',
-                'description'=>'Quadra de jogo de padel 3',
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>4,
-                'name'=>'Quadra 4',
-                'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                'limit'=>'4',
-                'club_id'=>'1',
-                'description'=>'Quadra de jogo de padel 4',
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-        ]);
+        // DB::table('courts')->insert([
+        //     [
+        //         'id'=>1,
+        //         'name'=>'Quadra 1',
+        //         'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        //         'limit'=>'4',
+        //         'club_id'=>'1',
+        //         'description'=>'Quadra de jogo de padel 1',
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>2,
+        //         'name'=>'Quadra 2',
+        //         'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        //         'limit'=>'4',
+        //         'club_id'=>'1',
+        //         'description'=>'Quadra de jogo de padel 2',
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>3,
+        //         'name'=>'Quadra 3',
+        //         'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        //         'limit'=>'4',
+        //         'club_id'=>'1',
+        //         'description'=>'Quadra de jogo de padel 3',
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>4,
+        //         'name'=>'Quadra 4',
+        //         'image_url'=>'https://images.pexels.com/photos/2486168/pexels-photo-2486168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        //         'limit'=>'4',
+        //         'club_id'=>'1',
+        //         'description'=>'Quadra de jogo de padel 4',
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        // ]);
 
-        DB::table('schedules')->insert([
-            [
-                'id'=>1,
-                'date'=>'2024/01/31',
-                'start_time'=>'09:00:00',
-                'end_time'=>'10:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>2,
-                'date'=>'2024/01/31',
-                'start_time'=>'10:00:00',
-                'end_time'=>'11:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>3,
-                'date'=>'2024/01/31',
-                'start_time'=>'11:00:00',
-                'end_time'=>'12:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>4,
-                'date'=>'2024/01/31',
-                'start_time'=>'12:00:00',
-                'end_time'=>'13:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>5,
-                'date'=>'2024/01/31',
-                'start_time'=>'13:00:00',
-                'end_time'=>'14:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'id'=>6,
-                'date'=>'2024/01/31',
-                'start_time'=>'14:00:00',
-                'end_time'=>'15:00:00',
-                'court_id'=> 1,
-                'price_id'=> 1,
-                'status_id'=> 1,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-        ]);
+        // DB::table('schedules')->insert([
+        //     [
+        //         'id'=>1,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'09:00:00',
+        //         'end_time'=>'10:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>2,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'10:00:00',
+        //         'end_time'=>'11:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>3,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'11:00:00',
+        //         'end_time'=>'12:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>4,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'12:00:00',
+        //         'end_time'=>'13:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>5,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'13:00:00',
+        //         'end_time'=>'14:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        //     [
+        //         'id'=>6,
+        //         'date'=>'2024/01/31',
+        //         'start_time'=>'14:00:00',
+        //         'end_time'=>'15:00:00',
+        //         'court_id'=> 1,
+        //         'price_id'=> 1,
+        //         'status_id'=> 1,
+        //         'created_at'=>now(),
+        //         'updated_at'=>now()
+        //     ],
+        // ]);
 
         DB::table('provinces')->insert([
             [

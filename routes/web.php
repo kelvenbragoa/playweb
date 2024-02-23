@@ -62,7 +62,11 @@ Route::resource('owner-courts', 'App\Http\Controllers\Owner\CourtsController');
 Route::resource('owner-club', 'App\Http\Controllers\Owner\ClubController');
 Route::resource('owner-schedules', 'App\Http\Controllers\Owner\ScheduleController');
 Route::resource('owner-prices', 'App\Http\Controllers\Owner\PricesController');
+Route::resource('owner-players', 'App\Http\Controllers\Owner\PlayerController');
 Route::get('owner-search-users', [App\Http\Controllers\Owner\ScheduleController::class, 'searchusers']);
+Route::post('owner-schedule-copy', [App\Http\Controllers\Owner\ScheduleController::class, 'copy']);
+Route::post('owner-schedule-generate', [App\Http\Controllers\Owner\ScheduleController::class, 'generate']);
+
 
 
 

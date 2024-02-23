@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Court;
 use App\Models\Player;
+use App\Models\Price;
 use App\Models\Schedule;
-use App\Models\Transaction;
 use App\Models\User;
-use App\Notifications\Operation;
-use Illuminate\Support\Facades\Notification;
+use Carbon\CarbonPeriod;
 
 class ScheduleController extends Controller
 {
@@ -37,73 +36,47 @@ class ScheduleController extends Controller
     {
         //
         $data = $request->all();
-        $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
-        $schedule = Schedule::find($data['schedule_id']);
 
-        if($lotation>=4){
-            return response()->json([
-             'status'=>400,
-             'message'=>'You have reached the limit of 4 players per schedule'
-            ],400);
-        }else{
-            $schedule->update([
-                'status_id'=>2
+        $request->validate([
+            'date' =>'required',
+            'start_time' =>'required',
+            'end_time' =>'required',
+            'price_id' =>'required',
+            'court_id' =>'required',
+          
+        ]);
+
+        $court = Court::find($data['court_id']);
+        $test1 = Schedule::where('court_id',$data['court_id'])->where('date',$data['date'])->where('start_time',$data['start_time'])->count();
+        $test2 = Schedule::where('court_id',$data['court_id'])->where('date',$data['date'])->where('end_time',$data['end_time'])->count();
+
+        if($test1>0|| $test2>0){
+            return response()->json(
+                ['message'=>'Existe um agendamento com este horario ja cadasatrado'],
+                401
+            );
+        }
+
+        
+            $schedule = Schedule::create([
+                'date' => $data['date'],
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'price_id' => $data['price_id'],
+                'court_id' => $data['court_id'],
+                'status_id' => 1,
+                'owner_id'=>$court->owner_id
             ]);
-            
-            $player = Player::create([
-                'user_id'=>$data['user_id'],
-                'schedule_id'=>$data['schedule_id'],
-
-            ]);
-            $lotation =  Player::where('schedule_id',$data['schedule_id'])->count();
-            if($lotation>=4){
-                $schedule->update([
-                  'status_id'=>3
-                ]);
-            }
-            if($lotation==1){
-                $schedule->update([
-                  'user_id'=>$data['user_id']
-                ]);
-            }
-
-            $player2 = Player::
-            with('schedule')
-            ->with('schedule.court.club')
-            ->with('schedule.price')
-            ->with('user')
-            ->find($player->id);
-
-            $user = User::find($data['user_id']);
-
-            // $user->update([
-            //     'balance'=>$user->balance - $schedule->price->price
-            // ]);
-
-            $transaction = Transaction::create([
-                'user_id'=> $user->id,
-                'type_transaction_id'=> 1,
-                'amount'=> $schedule->price->price,
-                'balance'=> $user->balance-$schedule->price->price,
-                'method'=> 'INTERNAL',
-                'schedule_id'=>$schedule->id,
-                'player_id'=>$player->id
-            ]);
-            Notification::send($user,new Operation('You joined the schedule : '.$schedule->date));
-
-            $schedule = Schedule::with('court')->with('price.coin')->with('status')->findOrFail($data['schedule_id']);
-            $playersData = Player::where('schedule_id',$data['schedule_id'])->with('user')->with('transaction')->paginate(200);
-
-            return response()->json([
-                'schedule' => $schedule,
-                'playersData'=>$playersData
-            ],200);
-            }
+    
+            $schedule2 = Schedule::where('court_id',$data['court_id'])->with('court')->with('price.coin')->with('status')->where('date',$data['date'])->orderBy('date','desc')->paginate(200) ;
+            return $schedule2;
     }
 
     /**
-     * Display the specified resource.
+     * Display t
+     * he specified resource.
      */
+    
     public function show(string $id)
     {
         //
@@ -138,6 +111,20 @@ class ScheduleController extends Controller
     public function destroy(string $id)
     {
         //
+        $schedule = Schedule::find($id);
+
+        $players = Player::where('schedule_id',$id)->get();
+
+        if($players->count() > 0){
+            return response()->json(
+                [
+            'message'=>'O court não pode ser apagado porque está em uso'
+            ],402);
+        }
+
+        $schedule->delete();
+
+        return response()->noContent();
     }
 
     public function searchusers(){
@@ -157,5 +144,114 @@ class ScheduleController extends Controller
 
 
             return $users;
+    }
+
+    public function copy (Request $request){
+        $data = $request->all();
+        $date = date('Y-m-d',strtotime($data['date']));
+        $period = CarbonPeriod::create($data['start_date'], $data['end_date']);
+
+        $schedule = Schedule::where('date',$date)->where('court_id',$data['court_id'])->orderBy('start_time','asc')->get();
+
+        
+        $arraydate = [];
+
+            foreach ($period as $key => $date) {
+                // $arraydate[] =($date->format('Y-m-d'));
+                foreach($schedule as $item){
+
+                    $test1 = Schedule::where('court_id',$data['court_id'])->where('date',$date->format('Y-m-d'))->where('start_time',$item->start_time)->count();
+                    $test2 = Schedule::where('court_id',$data['court_id'])->where('date',$date->format('Y-m-d'))->where('end_time',$item->end_time)->count();
+
+                    if($test1>0|| $test2>0){
+                        
+                    }else{
+                        Schedule::create([
+                            'date' => $date->format('Y-m-d'),
+                            'start_time' => $item->start_time,
+                            'end_time' => $item->end_time,
+                            'price_id' => $item->price_id,
+                            'court_id' => $item->court_id,
+                            'status_id' => 1,
+                            'owner_id'=>$item->owner_id
+                        ]);
+                    }
+                }
+
+                
+            }
+
+
+            $court = Court::
+            find($data['court_id']);
+            $schedule = Schedule::where('court_id',$data['court_id'])->with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->paginate(200) ;
+            $prices = Price::all();
+    
+            return [
+                'court'=>$court,
+                'schedule'=>$schedule,
+                'prices'=>$prices
+            
+            ];
+        
+    }
+
+    public function generate (Request $request){
+
+        $data = $request->all();
+        $date = date('Y-m-d',strtotime($data['date']));
+        $period = CarbonPeriod::create($data['start_time'],$data['step'].' minutes' ,$data['end_time']);  
+        $court = Court::find($data['court_id']);
+        $arraydate = [];
+
+        
+
+
+        foreach ($period as $key => $time) {
+            $arraydate[] =($time->format('H:i'));
+        } 
+
+        // dd($arraydate);
+
+        $length = count($arraydate);
+
+        // dd($length);
+
+        for($i = 0; $i < $length - 1; ++$i) {
+            if (current($arraydate) === next($arraydate)) {
+                // they match
+            }
+
+            // dd($arraydate[$i], $arraydate[$i+1]);
+            $test1 = Schedule::where('court_id',$data['court_id'])->where('date',$date)->where('start_time',$arraydate[$i])->count();
+            $test2 = Schedule::where('court_id',$data['court_id'])->where('date',$date)->where('end_time',$arraydate[$i+1])->count();
+
+            if($test1>0|| $test2>0){
+                
+            }else{
+                Schedule::create([
+                    'date' => $date,
+                    'start_time' => $arraydate[$i],
+                    'end_time' =>$arraydate[$i+1],
+                    'price_id' => $data['price_id'],
+                    'court_id' => $court->id,
+                    'status_id' => 1,
+                    'owner_id'=>$court->owner_id
+                ]);
+            }
+        }
+
+        $schedule = Schedule::where('court_id',$data['court_id'])->with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->paginate(200) ;
+        $prices = Price::all();
+    
+            return [
+                'court'=>$court,
+                'schedule'=>$schedule,
+                'prices'=>$prices
+            
+            ];
+
+        
+
     }
 }

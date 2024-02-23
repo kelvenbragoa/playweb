@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('court_id');
             $table->integer('price_id');
             $table->integer('status_id');
+            $table->integer('owner_id');
             $table->timestamps();
         });
     }

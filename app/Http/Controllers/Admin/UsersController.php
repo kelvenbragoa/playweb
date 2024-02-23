@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,93 +47,48 @@ class UsersController extends Controller
         $data = $request->all();
 
         $request->validate([
-            'firstName' =>'required',
-            'lastName' =>'required',
-            'address' =>'required',
-            'code' =>'required',
-            'bi' =>'required',
-            'mobile' =>'required|min:9',
-            'cellphone' =>'required|min:9',
+            'name' =>'required',
+            'surname' =>'required',
+            'mobile' =>'required',
+            'birth_date' =>'required',
+            'gender_id' =>'required',
+            'club_name' =>'required|min:9',
+            'image_url' =>'required|min:9',
             'province_id' =>'required',
-            'city_id' =>'required',
-            'user_status_id' =>'required',
-            'role_id' =>'required',
-            'account_status_id' =>'required',
+            'address' =>'required',
+            'description' =>'required',
+            'min_price' =>'required',
             'email' =>'required|unique:users,email',
             'password' =>'required|min:8',
-            
         ]);
 
-        if($data['role_id']==2 || $data['role_id']==3 || $data['role_id']==4 | $data['role_id']==11 | $data['role_id']==12 | $data['role_id']==13 | $data['role_id']==14 | $data['role_id']==15 | $data['role_id']==16)
-        {
-            $user = User::create([
-                'firstName' => $data['firstName'],
-                'lastName' => $data['lastName'],
-                'address' => $data['address'],
-                'code' => $data['code'],
-                'bi' => $data['bi'],
-                'mobile' => $data['mobile'],
-                'cellphone' => $data['cellphone'],
-                'country_id' => 1,
-                'province_id' => $data['province_id'],
-                'city_id' => $data['city_id'],
-                'user_status_id' => $data['user_status_id'],
-                'role_id' => $data['role_id'],
-                'account_status_id' => $data['account_status_id'],
-                'email' => strtolower($data['email']),
-                'password' => bcrypt($data['password']),
-            ]);
-    
-            return $user;
-        }
+        $user = User::create([
+            'name' =>$data['name'],
+            'surname' =>$data['surname'],
+            'mobile' =>$data['mobile'],
+            'birth_date' =>$data['birth_date'],
+            'gender_id' =>$data['gender_id'],
+            'balance' =>0,
+            'role_id' =>2,
+            'email' =>$data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
 
-        if($data['role_id']==5 || $data['role_id']==6 || $data['role_id']==7 )
-        {
-            $user = User::create([
-                'firstName' => $data['firstName'],
-                'lastName' => $data['lastName'],
-                'address' => $data['address'],
-                'code' => $data['code'],
-                'bi' => $data['bi'],
-                'mobile' => $data['mobile'],
-                'cellphone' => $data['cellphone'],
-                'area_id' => $data['area_id'],
-                'country_id' => 1,
-                'province_id' => $data['province_id'],
-                'city_id' => $data['city_id'],
-                'user_status_id' => $data['user_status_id'],
-                'role_id' => $data['role_id'],
-                'account_status_id' => $data['account_status_id'],
-                'email' => strtolower($data['email']),
-                'password' => bcrypt($data['password']),
-            ]);
-    
-            return $user;
-        }
+        $club = Club::create([
+            'name' =>$data['club_name'],
+            'image_url' =>$data['image_url'],
+            'address' =>$data['address'],
+            'user_id' =>$user->id,
+            'province_id' =>$data['province_id'],
+            'description' =>$data['description'],
+            'min_price' =>$data['min_price'],
+            'is_active' =>1,
+        ]);
 
-        if($data['role_id']==8 || $data['role_id']==9 || $data['role_id']==10 )
-        {
-            $user = User::create([
-                'firstName' => $data['firstName'],
-                'lastName' => $data['lastName'],
-                'address' => $data['address'],
-                'code' => $data['code'],
-                'bi' => $data['bi'],
-                'mobile' => $data['mobile'],
-                'cellphone' => $data['cellphone'],
-                'destination_id' => $data['destination_id'],
-                'country_id' => 1,
-                'province_id' => $data['province_id'],
-                'city_id' => $data['city_id'],
-                'user_status_id' => $data['user_status_id'],
-                'role_id' => $data['role_id'],
-                'account_status_id' => $data['account_status_id'],
-                'email' => strtolower($data['email']),
-                'password' => bcrypt($data['password']),
-            ]);
+        
     
-            return $user;
-        }
+        return $user;
+        
 
 
 
