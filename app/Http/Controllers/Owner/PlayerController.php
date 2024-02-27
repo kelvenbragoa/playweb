@@ -117,8 +117,8 @@ class PlayerController extends Controller
                 'user_id'=>Auth::user()->id,
                 'obs'=>'Usuário não registrado no sistema',
                 'name'=>$data['name'],
-                'mobile'=>$data['mobile'],
-                'email'=>$data['email'],
+                'mobile'=>$data['mobile'] ?? '',
+                'email'=>$data['email'] ?? '',
                 'schedule_id'=>$data['schedule_id'],
                 'owner_id'=>$schedule->owner_id
             ]);
@@ -199,5 +199,24 @@ class PlayerController extends Controller
     public function destroy(string $id)
     {
         //
+        $player = Player::findOrFail($id);
+        $schedule = Schedule::with('court')->with('price.coin')->with('status')->findOrFail($player->schedule_id);
+        $transation = Transaction::where('player_id', $player->id)->first();
+        
+        $player->delete();
+        $transation->delete();
+        $lotation =  Player::where('schedule_id',$player->schedule_id)->count();
+        $playersData = Player::where('schedule_id',$player->schedule_id)->with('user')->with('transaction')->paginate(200);
+
+        if($lotation == 0){
+            $schedule->update([
+              'status_id'=>1
+            ]);
+        }
+        return response()->json([
+          'message'=>'Agendamento apagado.',
+          'schedule'=>$schedule,
+          'playersData'=>$playersData
+        ],200);
     }
 }

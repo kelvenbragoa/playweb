@@ -513,7 +513,7 @@ onMounted(() => {
                                                         </td>
 
                                                         <td>
-                                                            <!-- <router-link :to="'/admin/schedules/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link> -->
+                                                            <router-link :to="'/owner/schedules/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link>
                                                             <router-link
                                                                 :to="'/owner/schedules/' + actualData.id"><vue-feather
                                                                     type="eye"></vue-feather></router-link>

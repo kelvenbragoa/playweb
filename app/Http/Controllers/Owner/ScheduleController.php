@@ -95,6 +95,15 @@ class ScheduleController extends Controller
     public function edit(string $id)
     {
         //
+        $schedule = Schedule::with('court')->with('price.coin')->with('status')->findOrFail($id);
+        $prices = Price::all();
+        // $playersData = Player::where('schedule_id',$id)->with('user')->with('transaction')->paginate(200);
+
+        return response()->json([
+            'schedule' => $schedule,
+            'prices'=>$prices
+            // 'playersData'=>$playersData
+        ],200);
     }
 
     /**
@@ -103,6 +112,11 @@ class ScheduleController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = $request->all();
+
+        $schedule = Schedule::find($id);
+        $schedule->update($data);
+        return $schedule;
     }
 
     /**
@@ -118,7 +132,7 @@ class ScheduleController extends Controller
         if($players->count() > 0){
             return response()->json(
                 [
-            'message'=>'O court não pode ser apagado porque está em uso'
+            'message'=>'O Horário não pode ser apagado porque está em uso'
             ],402);
         }
 

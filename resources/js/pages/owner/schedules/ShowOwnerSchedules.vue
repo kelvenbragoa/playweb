@@ -25,6 +25,9 @@ let currentvalue = ref([]);
 const toastr = useToastr();
 let playersData = ref([]);
 let systemUser = ref(1);
+const loadingButtonDelete = ref(false);
+
+let dataIdBeingDeleted = ref(null);
 const schema = yup.object({
 
     
@@ -108,6 +111,42 @@ loading.value = false;
 
 
 };
+
+const confirmDeletion = (data) => {
+
+dataIdBeingDeleted = data.id;
+
+$('#deleteModal').modal('show');
+// axios.post('/categories',values).then((response)=>{
+
+//   categories.value.unshift(response.data);
+//   $('#createCategory').modal('hide');
+//   resetForm();
+// })
+};
+
+const deleteData = () =>{
+
+loadingButtonDelete.value= true;
+
+axios.delete(`/owner-players/${dataIdBeingDeleted}`)
+.then((response)=>{
+    // retrievedData.value = response.data.schedule;
+    // retrievedData.value.data = retriviedData.value.data.filter(data=>data.id !== dataIdBeingDeleted); 
+    retrievedData.value = response.data.schedule;
+    playersData.value = response.data.playersData;
+ $('#deleteModal').modal('hide');
+ toastr.success('Registro apagado com sucesso');
+
+
+}).catch((response)=>{
+ toastr.error('Erro ao apagar. '+response.message);
+ loadingButtonDelete.value= false;
+ $('#deleteModal').modal('hide');
+}).finally(()=>{
+ loadingButtonDelete.value= false;
+});
+}
 
 onMounted(()=>{
   
@@ -229,6 +268,7 @@ onMounted(()=>{
                                                             <thead>
                                                                 <tr>
                                                                     <th>#</th>
+                                                                    
                                                                     <th>Nome</th>
                                                                     <th>Telefone</th>
                                                                     <th>Email</th>
@@ -241,10 +281,11 @@ onMounted(()=>{
                                                             <tbody v-if="playersData.data.length > 0">
                                                                 <tr  v-for="(actualData,index) in playersData.data" :key="actualData.id">
                                                                     <td>#{{ index + 1 }}</td>
+                                                                   
                                                                     <!-- <td>{{ actualData.user.name}} {{ actualData.user.surname}}</td> -->
-                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.name : actualData.user.name+' '+actualData.user.surname }}</td>
-                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.mobile :actualData.user.mobile}}</td>
-                                                                    <td>{{ actualData.user_id == actualData.owner_id ? actualData.email : actualData.user.email}}</td>
+                                                                    <td>{{ actualData.name != null ? actualData.name : actualData.user.name+' '+actualData.user.surname }}</td>
+                                                                    <td>{{ actualData.mobile != null ? actualData.mobile :actualData.user.mobile}}</td>
+                                                                    <td>{{ actualData.email != null ? actualData.email : actualData.user.email}}</td>
                                                                     <td>{{ actualData.obs}}</td>
                                                                     <td>{{ moment(actualData.created_at).format('DD-MM-YYYY H:mm')}}</td>
                                                                     <td>#{{ actualData.transaction == null ? '' : actualData.transaction.id}}</td>
@@ -253,7 +294,7 @@ onMounted(()=>{
                                                                     <td>
                                                                         <!-- <router-link :to="'/admin/schedules/'+actualData.id+'/edit'"><vue-feather type="edit-2"></vue-feather></router-link> -->
                                                                         <router-link :to="'/owner/schedules/'+actualData.id"><vue-feather type="eye"></vue-feather></router-link> 
-                                                                        <!-- <a href="#" @click.prevent="confirmDeletion(actualData)"><vue-feather type="trash"></vue-feather></a> -->
+                                                                        <a href="#" @click.prevent="confirmDeletion(actualData)"><vue-feather type="trash"></vue-feather></a>
                                                                         
                                                                     </td>
                                                                 </tr>
@@ -292,4 +333,31 @@ onMounted(()=>{
             </div> 
         </div>
     </div>
+
+    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Deseja mesmo eliminar este item.</h5>
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            Ao apagar este item, irá apagar todos os registros relacionados a ele.
+        </div>
+        <div class="modal-footer">
+          
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button @click.prevent="deleteData" type="button" class="btn btn-danger" :disabled="loadingButtonDelete">
+                    <div v-if="loadingButtonDelete" class="spinner-border spinner-border-sm" role="status"></div>
+                    <span v-else>Apagar registro</span>
+                </button>
+         
+          
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
