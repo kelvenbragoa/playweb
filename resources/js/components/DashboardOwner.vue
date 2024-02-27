@@ -1,16 +1,18 @@
 <script setup>
 
-import {onMounted, ref, reactive, onUpdated} from 'vue';
+import {onMounted, ref, reactive, onUpdated,watch} from 'vue';
 import axios from 'axios';
 import VueFeather from 'vue-feather';
 import moment from 'moment'
+import VCalendar from "v-calendar";
+import { Calendar, DatePicker } from "v-calendar";
 
 
 const loadingDiv = ref(true);
 const users = ref(0)
 const courts = ref(0)
 const schedules = ref(0)
-
+const selectedDate = ref(moment().format('YYYY-MM-DD'));
 const courtData = ref([])
 // const centercosts = ref(0)
 // const typeequipments = ref(0)
@@ -40,17 +42,36 @@ const getDashboardData = () =>{
     })
 }
 
+watch(selectedDate, () => {
+    // loadingBody.value = true;
+    var newDate = moment(selectedDate.value).format("Y-MM-D");
+    // alert(newDate)
+
+    axios
+        .get(
+            `/updatescheduledashboard/${newDate}`
+        )
+        .then((response) => {
+            courtData.value = response.data
+            // retrievedData.value = response.data.court;
+            // scheduleData.value = response.data.schedule;
+            // prices.value = response.data.prices;
+            // loadingBody.value = false;
+        
+        })
+        .catch(() => {
+            // loadingBody.value = false;
+        });
+    // loadingBody.value = false;
+});
+
+
 
 onMounted(()=>{
-
     getDashboardData();
-
 })
 
 
-onUpdated(()=>{
-
-})
 
 
 
@@ -71,28 +92,7 @@ onUpdated(()=>{
                                     <div class="card-body">
 
                                         <div class="row">
-                                            <!-- <div class="col-sm-6 col-xl-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col mt-0">
-                                                                <h5 class="card-title">Usuários</h5>
-                                                            </div>
-
-                                                            <div class="col-auto">
-                                                                <div class="stat text-primary">
-                                                                    <vue-feather type="users"></vue-feather>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <h1 class="mt-1 mb-3">{{users}}</h1>
-                                                        <div class="mb-0">
-                                                             <router-link to=""><vue-feather type="eye"></vue-feather></router-link>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                            
                                             <div class="col-sm-6 col-xl-3">
                                                 <div class="card">
                                                     <div class="card-body">
@@ -139,42 +139,24 @@ onUpdated(()=>{
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-sm-6 col-xl-3">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col mt-0">
-                                                                <h5 class="card-title">Centros de Custo</h5>
-                                                            </div>
-
-                                                            <div class="col-auto">
-                                                                <div class="stat text-primary">
-                                                                    <vue-feather type="dollar-sign"></vue-feather>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <h1 class="mt-1 mb-3">{{centercosts}}</h1>
-                                                        <div class="mb-0">
-                                                             <router-link to="/admin/centercost"><vue-feather type="eye"></vue-feather></router-link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                           
                                         </div>
 
                                         <hr>
+                                        <div class="m-4">
+                                            <DatePicker v-model="selectedDate" view="weekly" expanded />
+                                        </div>
                                         <div class="row">
                                                         <div class="col-12 col-lg-6" v-for="court in courtData" :key="court.id">
                                                             <div class="card">
                                                                 <div class="card-header">
-                                                                    <h5 class="card-title">{{ court.name }} (<small>{{ moment().format('DD-MM-YYYY') }}</small>)</h5>
+                                                                    <h5 class="card-title">{{ court[0].court.name ?? 'Quadra' }} (<small>{{ moment(selectedDate).format('DD-MM-YYYY') }}</small>)</h5>
                                                                     
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <div class="chart">
                                                                         <div class="row">
-                                                                            <div class="col-4 col-lg-4 mb-2" v-for="schedule in court.schedules" :key="schedule.id">
+                                                                            <div class="col-4 col-lg-4 mb-2" v-for="schedule in court" :key="schedule.id">
                                                                                 <router-link
                                                                                     :to="'/owner/schedules/' + schedule.id">
                                                                                 <span class="badge bg-success" v-if="schedule.status_id==1">{{schedule.start_time}} - {{schedule.end_time}}</span>

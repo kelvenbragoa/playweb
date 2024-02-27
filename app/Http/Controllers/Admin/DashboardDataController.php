@@ -45,7 +45,8 @@ class DashboardDataController extends Controller
         $schedules=Schedule::count();
 
         $courtsowner = Court::where('owner_id',Auth::user()->id)->count();
-        $courtData= Court::where('owner_id',Auth::user()->id)->with('schedules')->get();
+        // $courtData= Court::where('owner_id',Auth::user()->id)->with('schedules')->get();
+        $courtData = Schedule::with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('court.name');
         $schedulesowner = Schedule::where('owner_id',Auth::user()->id)->where('status_id','!=',1)->where('date',date('Y-m-d'))->count();
        
 
@@ -60,5 +61,12 @@ class DashboardDataController extends Controller
 
             'courtData'=>$courtData,
         ];
+    }
+
+    public function updatescheduledashboard($date){
+
+        $schedule = Schedule::with('court')->with('price.coin')->with('status')->where('date',$date)->orderBy('start_time','asc')->get()->groupBy('court.name');
+        return $schedule;
+
     }
 }

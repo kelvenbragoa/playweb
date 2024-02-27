@@ -64,12 +64,10 @@ const getUsers = () => {
         }
       })
        .then((response)=>{
+        console.log(response.data);
         users.value = response.data;
-        tempValues = users.filter((item) => {
-        return (item.role_id == 3)
-        })
-        users.value = tempValues
-       
+        // users.value = users.value.filter(data=>data.role_id !== 1 && data.role_id !== 2 ); 
+ 
        }).catch(()=>{
        })
 }

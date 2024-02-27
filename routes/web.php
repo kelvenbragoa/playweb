@@ -29,6 +29,8 @@ Route::get('/updateschedule/{date}/{courtid}', [App\Http\Controllers\GlobalContr
 
 Route::get('/updatecourtschedule/{date}/{courtid}', [App\Http\Controllers\Owner\CourtsController::class, 'updatecourtschedule']);
 
+Route::get('/updatescheduledashboard/{date}', [App\Http\Controllers\Admin\DashboardDataController::class, 'updatescheduledashboard']);
+
 
 
 
