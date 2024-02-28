@@ -495,21 +495,24 @@ onMounted(() => {
                                                                     "(" +
                                                                     actualData.players_count +
                                                                     ")"
-                                                                }}</span>
+                                                                }}
+                                                            </span>
                                                             <span class="badge bg-warning"
                                                                 v-if="actualData.status_id == 2">{{
                                                                     actualData.status.name +
                                                                     "(" +
                                                                     actualData.players_count +
                                                                     ")"
-                                                                }}</span>
+                                                                }}
+                                                            </span>
                                                             <span class="badge bg-danger"
                                                                 v-if="actualData.status_id == 3">{{
                                                                     actualData.status.name +
                                                                     "(" +
                                                                     actualData.players_count +
                                                                     ")"
-                                                                }}</span>
+                                                                }}
+                                                            </span>
                                                         </td>
 
                                                         <td>

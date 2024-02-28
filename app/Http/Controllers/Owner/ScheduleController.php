@@ -82,10 +82,12 @@ class ScheduleController extends Controller
         //
         $schedule = Schedule::with('court')->with('price.coin')->with('status')->findOrFail($id);
         $playersData = Player::where('schedule_id',$id)->with('user')->with('transaction')->paginate(200);
+        $nextschedules = Schedule::where('date',$schedule->date)->where('court_id',$schedule->court_id)->where('start_time','>',$schedule->start_time)->orderBy('start_time','asc')->with('court')->with('price.coin')->with('status')->take(2)->get();
 
         return response()->json([
             'schedule' => $schedule,
-            'playersData'=>$playersData
+            'playersData'=>$playersData,
+            'nextschedules' => $nextschedules
         ],200);
     }
 

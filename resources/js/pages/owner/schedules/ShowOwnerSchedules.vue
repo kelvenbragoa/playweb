@@ -19,6 +19,7 @@ const router = useRouter();
 let self = this;
 let searchQuery = ref(null)
 let equipments = ref([]);
+let nextschedules = ref([]);
 const loading = ref(false);
 let users =ref([]);
 let currentvalue = ref([]);
@@ -48,6 +49,7 @@ const getData = (page=1) => {
         loadingDiv.value=false;
         retrievedData.value = response.data.schedule;
         playersData.value = response.data.playersData;
+        nextschedules.value = response.data.nextschedules;
        
        }).catch(()=>{
         loadingDiv.value=false;
@@ -92,6 +94,7 @@ axios.post('/owner-players',values).then((response)=>{
 // $('#createCategory').modal('hide');
 retrievedData.value = response.data.schedule;
 playersData.value = response.data.playersData;
+nextschedules.value = response.data.nextschedules;
 actions.resetForm();
 // router.push({ path: '/owner/courts' });
 toastr.success('Agendamento criado com sucesso');
@@ -135,6 +138,7 @@ axios.delete(`/owner-players/${dataIdBeingDeleted}`)
     // retrievedData.value.data = retriviedData.value.data.filter(data=>data.id !== dataIdBeingDeleted); 
     retrievedData.value = response.data.schedule;
     playersData.value = response.data.playersData;
+    nextschedules.value = response.data.nextschedules;
  $('#deleteModal').modal('hide');
  toastr.success('Registro apagado com sucesso');
 
@@ -198,6 +202,49 @@ onMounted(()=>{
                                                                             <option value="2">Sim</option>
                                                                             <option value="1">Não</option>
                                                                         </Field>
+                                                                        
+                                                                        <span class="invalid-feedback">{{ errors.user }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-12">
+                                                                        <label class="form-label" for="user">Múltiplo Agendamento</label>
+                                                                        <FieldArray class="form-control" name="multipleschedule">
+                                                                            <div class="row">
+                                                                                <div class="mb-2 col-md-3" v-for="(nextschedule,idx) in nextschedules" :key="nextschedule.id">
+                                                                                    <Field class="form-check-input" type="checkbox" :value="nextschedule.id" :id="`multipleschedule[${idx}].multipleschedule_id`" :name="`multipleschedule[${idx}].multipleschedule_id`"/>
+                                                                                    <span class="form-check-label">
+                                                                                    {{ nextschedule.start_time }} / {{ nextschedule.end_time }}
+                                                                                    
+                                                                                        <span class="badge bg-success"
+                                                                                            v-if="nextschedule.status_id == 1">{{
+                                                                                                nextschedule.status.name +
+                                                                                                "(" +
+                                                                                                nextschedule.players_count +
+                                                                                                ")"
+                                                                                            }}
+                                                                                        </span>
+                                                                                        <span class="badge bg-warning"
+                                                                                            v-if="nextschedule.status_id == 2">{{
+                                                                                                nextschedule.status.name +
+                                                                                                "(" +
+                                                                                                nextschedule.players_count +
+                                                                                                ")"
+                                                                                            }}
+                                                                                        </span>
+                                                                                        <span class="badge bg-danger"
+                                                                                            v-if="nextschedule.status_id == 3">{{
+                                                                                                nextschedule.status.name +
+                                                                                                "(" +
+                                                                                                nextschedule.players_count +
+                                                                                                ")"
+                                                                                            }}
+                                                                                        </span>
+                                                                                    
+                                                                                    </span> 
+                                                                                </div>
+                                                                            </div>  
+                                                                        </FieldArray>
                                                                         
                                                                         <span class="invalid-feedback">{{ errors.user }}</span>
                                                                     </div>
