@@ -4,6 +4,7 @@ import {onMounted, ref, reactive, onUpdated,watch} from 'vue';
 import axios from 'axios';
 import VueFeather from 'vue-feather';
 import moment from 'moment'
+import {Field} from 'vee-validate';
 import VCalendar from "v-calendar";
 import { Calendar, DatePicker } from "v-calendar";
 
@@ -14,6 +15,12 @@ const courts = ref(0)
 const schedules = ref(0)
 const selectedDate = ref(moment().format('YYYY-MM-DD'));
 const courtData = ref([])
+const scheduleGroup = ref([])
+
+const actualcourt = ref()
+const listcourt = ref([])
+const actualid = ref(0)
+
 // const centercosts = ref(0)
 // const typeequipments = ref(0)
 // const malfunctions = ref(0)
@@ -31,6 +38,10 @@ const getDashboardData = () =>{
         courts.value = response.data.courtsowner
         schedules.value = response.data.schedulesowner
         courtData.value = response.data.courtData
+        scheduleGroup.value = response.data.dategroup
+        actualcourt.value = response.data.actualcourt
+        listcourt.value = response.data.listcourt
+        actualid.value = actualcourt.value.id
         // centercosts.value = response.data.centercosts
         // typeequipments.value = response.data.typeequipments
         // malfunctions.value = response.data.malfunctions
@@ -41,6 +52,13 @@ const getDashboardData = () =>{
         loadingDiv.value=false;
     })
 }
+
+const getScheduleDate = (id)=>{
+    axios.get(`/updateownerdashboard/+${id}`)
+    .then((response)=>{
+        actualcourt.value = response.data.actualcourt
+        scheduleGroup.value = response.data.dategroup
+    })}
 
 watch(selectedDate, () => {
     // loadingBody.value = true;
@@ -141,8 +159,89 @@ onMounted(()=>{
                                             </div>
                                            
                                         </div>
-
                                         <hr>
+                                        <h5 class="card-title mb-0">Visão Semanal de Reservas</h5>
+                                        <div class="row">
+                                            <div class="col-12 col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h5 class="card-title">{{ actualcourt.name }} </h5>
+                                                                    <div class="row">
+                                                                        <div class="mb-3 col-md-2">
+                                                                            <label class="form-label" for="province_id">Escolher Quadra</label>
+                                                                            <select class="form-control" v-model="actualid"  @change="getScheduleDate(actualid)" name="court">
+                                                                                <option v-for="list in listcourt" :key="list.id" :value="list.id">{{ list.name }}</option>
+                                                                            </select>
+                                                                          
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <!-- CADA LINHA -->
+                                                                    
+                                                                    <div class="row">
+
+                                                                        <div class="col-12 col-md-2 text-white" v-for="group in scheduleGroup" :key="group.id">
+                                                                            <div class="bg-secondary rounded text-center">
+                                                                                <p>{{moment(group[0].date).format('DD-MM-YYYY')}}</p>
+                                                                                <p>{{moment(group[0].date).format('dddd')}}</p>
+                                                                            </div>
+                                                                            <!-- Reservas -->
+                                                                            <div class="row bg-secondary rounded text-white text-center mb-1 mr-1" v-for="schedule in group" :key="schedule.id" >
+                                                                                <router-link  :to="'/owner/schedules/' + schedule.id" style="text-decoration: none; color: inherit;">
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            {{schedule.start_time}}
+                                                                                        </div>
+                                                                                        <div class="col">
+                                                                                            {{schedule.end_time}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            Reservas:
+                                                                                        </div>
+                                                                                        <div class="col">
+                                                                                            <span class="rounded-circle p-1" :class="{'bg-success':schedule.status_id==1, 'bg-warning':schedule.status_id==2, 'bg-danger':schedule.status_id==3}  ">
+                                                                                                {{schedule.players_count}}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="row text-left">
+                                                                                        <small>
+                                                                                                <div v-if="schedule.players.length > 0">
+                                                                                                    <span v-for="player in schedule.players" :key="player.id">
+                                                                                                    {{player.name != null ? player.name : player.user.name+' '+player.user.surname }}/
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <span>-</span>
+                                                                                                </div>
+                                                                                                
+                                                                                            
+                                                                                        </small> 
+                                                                                        <!-- <div class="col rounded bg-light m-1" >
+                                                                                            
+                                                                                        </div> -->
+                                                                                        
+                                                                                    </div>
+                                                                                </router-link>
+                                                                               
+                                                                            </div>
+                                                                            <!-- Reservas -->
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- CADA LINHA -->
+                                                                   
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                        </div>
+                                        <hr>
+                                        <h5 class="card-title mb-0">Visão Diária de Reservas</h5>
                                         <div class="m-4">
                                             <DatePicker v-model="selectedDate" view="weekly" expanded />
                                         </div>

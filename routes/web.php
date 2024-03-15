@@ -69,6 +69,9 @@ Route::resource('owner-recharges', 'App\Http\Controllers\Owner\WalletController'
 Route::get('owner-search-users', [App\Http\Controllers\Owner\ScheduleController::class, 'searchusers']);
 Route::post('owner-schedule-copy', [App\Http\Controllers\Owner\ScheduleController::class, 'copy']);
 Route::post('owner-schedule-generate', [App\Http\Controllers\Owner\ScheduleController::class, 'generate']);
+Route::get('updateownerdashboard/{id}', [App\Http\Controllers\Admin\DashboardDataController::class, 'updatedata']);
+
+
 
 
 
