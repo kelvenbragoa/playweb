@@ -51,7 +51,7 @@ class DashboardDataController extends Controller
 
         $courtschedule = Court::where('owner_id',Auth::user()->id)->first();
         $listcourt = Court::where('owner_id',Auth::user()->id)->get();
-        $date = now();
+        $date = now()->subDay();
         $date2 = now()->addDays(6);
         $scheduleGroup = Schedule::with('court')->with('price.coin')->with('status')->with('players.user')->whereBetween('date',[$date,$date2])->where('court_id',$courtschedule->id)->orderBy('date','asc')->orderBy('start_time','asc')->get()->groupBy('date');
 
