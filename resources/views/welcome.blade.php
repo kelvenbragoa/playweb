@@ -86,7 +86,7 @@
 					<ul class="nav header-navbar-rht">
 						
 						<li class="nav-item">
-							<a class="nav-link header-login" href="login">login / Signup </a>
+							<router-link class="nav-link header-login" to="login">Login / Signup</router-link>
 						</li>
 					</ul>
 				</nav>

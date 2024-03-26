@@ -178,6 +178,77 @@ onMounted(()=>{
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <!-- CADA LINHA -->
+
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th v-for="group in scheduleGroup" :key="group.id">
+                                                                                        <small>{{moment(group[0].date).format('DD-MM-YYYY')}}-</small>
+                                                                                        <small>{{moment(group[0].date).format('dddd')}}</small>
+                                                                                        <tr class="row bg-secondary rounded text-white text-center mb-1 mr-1" v-for="schedule in group" :key="schedule.id" >
+                                                                                            <router-link  :to="'/owner/schedules/' + schedule.id" style="text-decoration: none; color: inherit;">
+                                                                                                <td>
+                                                                                                    <div class="row">
+                                                                                                        <div class="col">
+                                                                                                            {{schedule.start_time}}
+                                                                                                        </div>
+                                                                                                        <div class="col">
+                                                                                                            {{schedule.end_time}}
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                    <div class="col">
+                                                                                                        Reservas:
+                                                                                                    </div>
+                                                                                                    <div class="col">
+                                                                                                        <span class="rounded-circle p-1" :class="{'bg-success':schedule.status_id==1, 'bg-warning':schedule.status_id==2, 'bg-danger':schedule.status_id==3}  ">
+                                                                                                            {{schedule.players_count}}
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <hr>
+                                                                                                <div class="row text-left">
+                                                                                                    <small>
+                                                                                                            <div v-if="schedule.players.length > 0">
+                                                                                                                <span v-for="player in schedule.players" :key="player.id">
+                                                                                                                {{player.name != null ? player.name : player.user.name+' '+player.user.surname }}/
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <div v-else>
+                                                                                                                <span>-</span>
+                                                                                                            </div>
+                                                                                                            
+                                                                                                        
+                                                                                                    </small> 
+                                                                                                    <!-- <div class="col rounded bg-light m-1" >
+                                                                                                        
+                                                                                                    </div> -->
+                                                                                                    
+                                                                                                </div>
+                                                                                                </td>
+                                                                                            </router-link>
+                                                                                        </tr>
+                                                                                    </th>
+                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <!-- <tbody v-if="retriviedData.data.length > 0">
+                                                                                <tr  v-for="(actualData,index) in retriviedData.data" :key="actualData.id">
+                                                                                    <td>#{{ index + 1 }}</td>
+                                                                                    <td>{{ actualData.name}}</td>
+                                                                                    <td>{{ actualData.surname}}</td>
+                                                                                    <td>{{ actualData.email}}</td>
+                                                                                    <td>{{ actualData.mobile}}</td>
+                                                                                    <td>{{ actualData.role.name}}</td>
+                                                                                    
+                                                                                
+                                                                                    
+                                                                                </tr>
+                                                                            </tbody> -->
+                                                                          
+                                                                        </table>
+                                                                    </div>
                                                                     
                                                                     <div class="row">
 
