@@ -191,19 +191,19 @@ onMounted(()=>{
                                                                                                 <td>
                                                                                                     <div class="row">
                                                                                                         <div class="col">
-                                                                                                            {{schedule.start_time}}
+                                                                                                            <small>{{schedule.start_time}}</small> 
                                                                                                         </div>
                                                                                                         <div class="col">
-                                                                                                            {{schedule.end_time}}
+                                                                                                            <small>{{schedule.end_time}}</small> 
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="row">
                                                                                                     <div class="col">
-                                                                                                        Reservas:
+                                                                                                        <small>Reservas:</small> 
                                                                                                     </div>
                                                                                                     <div class="col">
                                                                                                         <span class="rounded-circle p-1" :class="{'bg-success':schedule.status_id==1, 'bg-warning':schedule.status_id==2, 'bg-danger':schedule.status_id==3}  ">
-                                                                                                            {{schedule.players_count}}
+                                                                                                            <small>{{schedule.players_count}}</small> 
                                                                                                         </span>
                                                                                                     </div>
                                                                                                 </div>
@@ -258,7 +258,7 @@ onMounted(()=>{
                                                                                 <p>{{moment(group[0].date).format('dddd')}}</p>
                                                                             </div>
                                                                             <!-- Reservas -->
-                                                                            <div class="row bg-secondary rounded text-white text-center mb-1 mr-1" v-for="schedule in group" :key="schedule.id" >
+                                                                            <!-- <div class="row bg-secondary rounded text-white text-center mb-1 mr-1" v-for="schedule in group" :key="schedule.id" >
                                                                                 <router-link  :to="'/owner/schedules/' + schedule.id" style="text-decoration: none; color: inherit;">
                                                                                     <div class="row">
                                                                                         <div class="col">
@@ -292,14 +292,12 @@ onMounted(()=>{
                                                                                                 
                                                                                             
                                                                                         </small> 
-                                                                                        <!-- <div class="col rounded bg-light m-1" >
-                                                                                            
-                                                                                        </div> -->
+                                                                                       
                                                                                         
                                                                                     </div>
                                                                                 </router-link>
                                                                                
-                                                                            </div>
+                                                                            </div> -->
                                                                             <!-- Reservas -->
                                                                             
                                                                         </div>
