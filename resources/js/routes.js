@@ -66,6 +66,9 @@ export default [
     {
         path: '/home',
         name: 'home',
+        meta: {
+            requiresAuth: true
+        },
         component: Home,
     },
     {
@@ -76,11 +79,17 @@ export default [
     {
         path: '/clubs/:id',
         name: 'home.clubs.show',
+        meta: {
+            requiresAuth: true
+        },
         component: Clubs,
     },
     {
         path: '/schedule/courts/:id',
         name: 'home.courts.schedule',
+        meta: {
+            requiresAuth: true
+        },
         component: Schedule,
     },
 
@@ -91,12 +100,18 @@ export default [
     {
         path: '/admin/dashboard',
         name: 'admin.dashboard',
+        meta: {
+            requiresAuth: true
+        },
         component: DashboardAdmin,
     },
 
     {
         path: '/owner/dashboard',
         name: 'owner.dashboard',
+        meta: {
+            requiresAuth: true
+        },
         component: DashboardOwner,
     },
 
@@ -104,21 +119,33 @@ export default [
     {
         path: '/admin/users',
         name: 'admin.users.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexUsers,
     },
     {
         path: '/admin/users/create',
         name: 'admin.users.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateUsers,
     },
     {
         path: '/admin/users/:id',
         name: 'admin.users.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowUsers,
     },
     {
         path: '/admin/users/:id/edit',
         name: 'admin.users.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditUsers,
     },
 
@@ -126,21 +153,33 @@ export default [
     {
         path: '/admin/courts',
         name: 'admin.courts.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexCourts,
     },
     {
         path: '/admin/courts/create',
         name: 'admin.courts.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateCourts,
     },
     {
         path: '/admin/courts/:id',
         name: 'admin.courts.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowCourts,
     },
     {
         path: '/admin/courts/:id/edit',
         name: 'admin.courts.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditCourts,
     },
 
@@ -148,21 +187,33 @@ export default [
      {
         path: '/admin/schedules',
         name: 'admin.schedules.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexSchedules,
     },
     {
         path: '/admin/schedules/create',
         name: 'admin.schedules.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateSchedules,
     },
     {
         path: '/admin/schedules/:id',
         name: 'admin.schedules.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowSchedules,
     },
     {
         path: '/admin/schedules/:id/edit',
         name: 'admin.schedules.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditSchedules,
     },
 
@@ -175,21 +226,33 @@ export default [
     {
         path: '/owner/courts',
         name: 'owner.courts.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexOwnerCourts,
     },
     {
         path: '/owner/courts/create',
         name: 'owner.courts.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateOwnerCourts,
     },
     {
         path: '/owner/courts/:id',
         name: 'owner.courts.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowOwnerCourts,
     },
     {
         path: '/owner/courts/:id/edit',
         name: 'owner.courts.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditOwnerCourts,
     },
 
@@ -197,21 +260,33 @@ export default [
     {
         path: '/owner/club',
         name: 'owner.club.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexOwnerClub,
     },
     {
         path: '/owner/club/create',
         name: 'owner.club.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateOwnerClub,
     },
     {
         path: '/owner/club/:id',
         name: 'owner.club.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowOwnerClub,
     },
     {
         path: '/owner/club/:id/edit',
         name: 'owner.club.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditOwnerClub,
     },
 
@@ -219,21 +294,33 @@ export default [
      {
         path: '/owner/prices',
         name: 'owner.prices.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexOwnerPrices,
     },
     {
         path: '/owner/prices/create',
         name: 'owner.prices.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateOwnerPrices,
     },
     {
         path: '/owner/prices/:id',
         name: 'owner.prices.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowOwnerPrices,
     },
     {
         path: '/owner/prices/:id/edit',
         name: 'owner.prices.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditOwnerPrices,
     },
 
@@ -241,21 +328,33 @@ export default [
      {
         path: '/owner/recharges',
         name: 'owner.recharges.index',
+        meta: {
+            requiresAuth: true
+        },
         component: IndexOwnerRecharges,
     },
     {
         path: '/owner/recharges/create',
         name: 'owner.recharges.create',
+        meta: {
+            requiresAuth: true
+        },
         component: CreateOwnerRecharges,
     },
     {
         path: '/owner/recharges/:id',
         name: 'owner.recharges.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowOwnerRecharges,
     },
     {
         path: '/owner/recharges/:id/edit',
         name: 'owner.recharges.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditOwnerRecharges,
     },
 
@@ -273,11 +372,17 @@ export default [
     {
         path: '/owner/schedules/:id',
         name: 'owner.schedules.show',
+        meta: {
+            requiresAuth: true
+        },
         component: ShowOwnerSchedules,
     },
     {
         path: '/owner/schedules/:id/edit',
         name: 'owner.schedules.edit',
+        meta: {
+            requiresAuth: true
+        },
         component: EditOwnerSchedules,
     },
 ]

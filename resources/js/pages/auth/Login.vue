@@ -24,6 +24,9 @@ import {reactive, ref} from 'vue';
         })
         .then((response)=>{
             console.log(response.data)
+
+			localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             
             if(response.data.role_id == 1){
               window.location.href="/admin/dashboard";

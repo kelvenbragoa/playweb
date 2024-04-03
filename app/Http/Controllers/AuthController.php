@@ -56,11 +56,11 @@ public function registeruser(Request $request){
 
    
 
-    $userteste = User::where('email',$data['email'])->orWhere('mobile',$data['mobile'])->first();
+    $userteste = User::where('email',$data['email'])->orWhere('mobile',$data['mobile'])->count();
 
-    if($userteste != null){
+    if($userteste > 0){
         return response(
-            [ 'message' => 'Existe um usuário com estas credenciais. Inicie a sessão'],403
+            [ 'message' => 'Existe um usuario com estas credenciais. Inicie a sessao'],403
          );
     }else{
         $gender = $data['gender']=='Male' ? 1 : 2;

@@ -152,6 +152,12 @@ axios.delete(`/owner-players/${dataIdBeingDeleted}`)
 });
 }
 
+function goBackUsingBack() {
+    if (router) {
+        router.back();
+    }
+}
+
 onMounted(()=>{
   
   getData();
@@ -169,7 +175,7 @@ onMounted(()=>{
                                     <div class="card-header">
                                         <h5 class="card-title">Data: {{ moment(retrievedData.date).format('DD-MM-YYYY') }}</h5>
 
-                                        <router-link :to="'/owner/courts/'+retrievedData.court_id" class="btn btn-pill btn-primary mt-3"><vue-feather type="arrow-left"></vue-feather>Voltar</router-link> 
+                                        <Button class="btn btn-pill btn-primary mt-3" @click="goBackUsingBack()"><vue-feather type="arrow-left"></vue-feather>Voltar</Button> 
 
                                        
 								    </div>
