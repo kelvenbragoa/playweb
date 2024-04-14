@@ -421,8 +421,7 @@ onMounted(()=>{
 <style>
 table {
   border-collapse: collapse;
-  border: 2px;
-  width: 20%;
+  width: 100%;
 }
 
 th, td {
