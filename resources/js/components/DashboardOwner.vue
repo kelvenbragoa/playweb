@@ -420,7 +420,7 @@ onMounted(()=>{
 </template>
 <style>
 table {
-    min-width: 50px;
+    min-width: 1px;
   border-collapse: collapse;
   width: 100%;
 }
