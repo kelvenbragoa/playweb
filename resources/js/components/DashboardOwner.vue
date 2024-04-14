@@ -170,7 +170,7 @@ onMounted(()=>{
                                         
                                         <div style="width: fit-content; overflow-x: auto; white-space: nowrap; display: flex;justify-content: space-around;">
                                             <div v-for="court in courtData" :key="court.id">
-                                                <table class="table table-bordered">
+                                                <table class=" table-bordered">
                                                     <tr>
                                                         <th>#</th>
                                                         <th>{{ court[0].court.name ?? 'Quadra' }}</th>
