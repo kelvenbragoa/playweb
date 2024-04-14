@@ -15,6 +15,8 @@ const courts = ref(0)
 const schedules = ref(0)
 const selectedDate = ref(moment().format('YYYY-MM-DD'));
 const courtData = ref([])
+
+const courtData2 = ref([])
 const scheduleGroup = ref([])
 
 const actualcourt = ref()
@@ -38,6 +40,7 @@ const getDashboardData = () =>{
         courts.value = response.data.courtsowner
         schedules.value = response.data.schedulesowner
         courtData.value = response.data.courtData
+        courtData2.value = response.data.courtData2
         scheduleGroup.value = response.data.dategroup
         actualcourt.value = response.data.actualcourt
         listcourt.value = response.data.listcourt
@@ -101,8 +104,11 @@ onMounted(()=>{
     <div v-if="!loadingDiv">
         <h1 class="h3 mb-3">Dashboard Clube</h1>
         
+        
                         <div class="row">
+                            
                             <div class="col-12">
+                                
                                 <div class="card">
                                     <div class="card-header">
                                         <h5 class="card-title mb-0">Dashboard</h5>
@@ -117,7 +123,109 @@ onMounted(()=>{
                                             <DatePicker v-model="selectedDate" view="weekly" expanded />
                                         </div>
                                         <div class="row">
-                                                        <div class="col-12 col-lg-6" v-for="court in courtData" :key="court.id">
+                                            <!-- <div class="table-responsive">
+                                            <table class="table table-bordered table-hover my-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th v-for="court in courtData" :key="court.id">{{ court[0].court.name ?? 'Quadra' }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(sc,index) in courtData2" :key="sc.id">
+                                                        <td>{{ index }}</td>
+                                                        <td>{{ sc }}</td>
+                                                        <td>{{ sc }}</td>
+                                                    </tr>
+                                                    <div v-for="court in courtData" :key="court.id">
+                                                        <tr v-for="schedule in court" :key="schedule.id" >
+                                                            <td>{{schedule.court_id}}</td>
+                                                            <td>{{schedule.court_id}}</td>
+                                                            
+                                                        </tr>
+                                                    </div> 
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div> -->
+
+                                        <!-- <div class="table-responsive">
+                                            <table class="table table-bordered table-hover my-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th v-for="court in courtData" :key="court.id" >{{ court[0].court.name ?? 'Quadra' }}</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>aa</td>
+                                                        <td>aa</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> -->
+
+                                        
+                                        <div style="width: fit-content; overflow-x: auto; white-space: nowrap; display: flex;justify-content: space-around;">
+                                            <div v-for="court in courtData" :key="court.id">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>{{ court[0].court.name ?? 'Quadra' }}</th>
+                                                        
+                                                    </tr>
+                                                    <tr  v-for="schedule in court" :key="schedule.id">
+                                                        <td>{{schedule.start_time}}</td>
+                                                        <td class="bg-success" v-if="schedule.status_id==1">
+                                                            <router-link :to="'/owner/schedules/' + schedule.id">
+                                                                {{ schedule.players_count }} Jogadores
+                                                            </router-link>
+                                                        </td>
+                                                        <td class="bg-warning" v-if="schedule.status_id==2">
+                                                            <router-link :to="'/owner/schedules/' + schedule.id">
+                                                                {{ schedule.players_count }} Jogadores
+                                                            </router-link>
+                                                        </td>
+                                                        <td class="bg-danger" v-if="schedule.status_id==3">
+                                                            <router-link :to="'/owner/schedules/' + schedule.id">
+                                                                {{ schedule.players_count }} Jogadores
+                                                            </router-link>
+                                                        </td>
+                                                    
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        
+                                        </div>
+                                        
+
+                                        <!-- <div style="width: 300px; overflow-x: auto; white-space: nowrap;" >
+                                            
+                                        <table class="table table-bordered table-hover" v-for="court in courtData" :key="court.id">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="width-80">#</th>
+                                                        <th>{{ court[0].court.name ?? 'Quadra' }}</th> 
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr v-for="schedule in court" :key="schedule.id">
+                                                            <td>{{schedule.start_time}} - {{schedule.end_time}}</td>
+                                                            <td>
+                                                                <router-link :to="'/owner/schedules/' + schedule.id">
+                                                                a
+                                                                </router-link>
+                                                            </td>
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> -->
+
+                                            
+                                                        <!-- <div class="col-12 col-lg-6" v-for="court in courtData" :key="court.id">
                                                             <div class="card">
                                                                 <div class="card-header">
                                                                     <h5 class="card-title">{{ court[0].court.name ?? 'Quadra' }} (<small>{{ moment(selectedDate).format('DD-MM-YYYY') }}</small>)</h5>
@@ -139,10 +247,10 @@ onMounted(()=>{
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
 
                                                        
-                                                    </div>
+                                        </div>
 
                                         <!-- <div class="row">
                                             <div class="col-sm-6 col-xl-3">
@@ -307,4 +415,20 @@ onMounted(()=>{
             </div> 
         </div>
     </div>
+
+
 </template>
+<style>
+table {
+  border-collapse: collapse;
+  border: 2px;
+  width: 10%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+</style>

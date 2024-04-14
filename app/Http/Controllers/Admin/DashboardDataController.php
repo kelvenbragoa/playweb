@@ -47,6 +47,7 @@ class DashboardDataController extends Controller
         $courtsowner = Court::where('owner_id',Auth::user()->id)->count();
         // $courtData= Court::where('owner_id',Auth::user()->id)->with('schedules')->get();
         $courtData = Schedule::with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('court.name');
+        $courtData2 = Schedule::with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('start_time');
         $schedulesowner = Schedule::where('owner_id',Auth::user()->id)->where('status_id','!=',1)->where('date',date('Y-m-d'))->count();
 
         $courtschedule = Court::where('owner_id',Auth::user()->id)->first();
@@ -55,7 +56,7 @@ class DashboardDataController extends Controller
         $date2 = now()->addDays(5);
         $scheduleGroup = Schedule::with('court')->with('price.coin')->with('status')->with('players.user')->whereBetween('date',[$date,$date2])->where('court_id',$courtschedule->id)->orderBy('date','asc')->orderBy('start_time','asc')->get()->groupBy('date');
 
-       
+        $tableheader = Court::orderBy('id','asc')->get();
        
 
 
@@ -69,7 +70,8 @@ class DashboardDataController extends Controller
             'dategroup'=>$scheduleGroup,
             'courtData'=>$courtData,
             'actualcourt'=>$courtschedule,
-            'listcourt'=>$listcourt
+            'listcourt'=>$listcourt,
+            'courtData2'=>$courtData2
         ];
     }
 
