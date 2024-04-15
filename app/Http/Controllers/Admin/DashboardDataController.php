@@ -92,7 +92,7 @@ class DashboardDataController extends Controller
 
     public function updatescheduledashboard($date){
 
-        $schedule = Schedule::with('court')->with('price.coin')->with('status')->where('date',$date)->orderBy('start_time','asc')->get()->groupBy('court.name');
+        $schedule = Schedule::with('court')->with('price.coin')->with('status')->with('players.user')->where('date',$date)->orderBy('start_time','asc')->get()->groupBy('court.name');
         return $schedule;
 
     }
