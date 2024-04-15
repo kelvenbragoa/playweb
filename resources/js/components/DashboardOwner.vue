@@ -187,7 +187,8 @@ onMounted(()=>{
                                                             <router-link :to="'/owner/schedules/' + schedule.id">
                                                                 <div>
                                                                     <span v-for="player in schedule.players">
-                                                                        {{player.name != null ? player.name : player.user.name+' '+player.user.surname }} <br>
+                                                                        <!-- {{player.name != null ? player.name : player.user.name+' '+player.user.surname }} <br> -->
+                                                                        {{ player.name }} <br>
                                                                     </span>
                                                                 </div>
                                                                 
