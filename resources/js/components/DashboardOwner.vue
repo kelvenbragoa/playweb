@@ -197,7 +197,8 @@ onMounted(()=>{
                                                         <td class="bg-danger" v-if="schedule.status_id==3">
                                                             <router-link :to="'/owner/schedules/' + schedule.id">
                                                                 <div>
-                                                                    <span v-for="player in schedule.players">{{ player.name }} <br></span>
+                                                                    <!-- <span v-for="player in schedule.players">{{ player.name }} <br></span> -->
+                                                                    {{ player.name }} <br>
                                                                 </div>
                                                             </router-link>
                                                         </td>
