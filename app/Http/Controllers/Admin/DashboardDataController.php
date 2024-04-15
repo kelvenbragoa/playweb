@@ -46,7 +46,7 @@ class DashboardDataController extends Controller
 
         $courtsowner = Court::where('owner_id',Auth::user()->id)->count();
         // $courtData= Court::where('owner_id',Auth::user()->id)->with('schedules')->get();
-        $courtData = Schedule::with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('court.name');
+        $courtData = Schedule::with('court')->with('price.coin')->with('status')->with('players')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('court.name');
         $courtData2 = Schedule::with('court')->with('price.coin')->with('status')->where('date',date('Y-m-d'))->orderBy('start_time','asc')->get()->groupBy('start_time');
         $schedulesowner = Schedule::where('owner_id',Auth::user()->id)->where('status_id','!=',1)->where('date',date('Y-m-d'))->count();
 

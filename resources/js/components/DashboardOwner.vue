@@ -185,12 +185,19 @@ onMounted(()=>{
                                                         </td>
                                                         <td class="bg-warning" v-if="schedule.status_id==2">
                                                             <router-link :to="'/owner/schedules/' + schedule.id">
-                                                                {{ schedule.players_count }} Jogadores
+                                                                <div>
+                                                                    <span v-for="player in schedule.players">
+                                                                        {{player.name != null ? player.name : player.user.name+' '+player.user.surname }} <br>
+                                                                    </span>
+                                                                </div>
+                                                                
                                                             </router-link>
                                                         </td>
                                                         <td class="bg-danger" v-if="schedule.status_id==3">
                                                             <router-link :to="'/owner/schedules/' + schedule.id">
-                                                                {{ schedule.players_count }} Jogadores
+                                                                <div>
+                                                                    <span v-for="player in schedule.players">{{ player.name }} <br></span>
+                                                                </div>
                                                             </router-link>
                                                         </td>
                                                     
@@ -428,6 +435,7 @@ table {
 th, td {
   text-align: left;
   padding: 8px;
+  
 }
 
 tr:nth-child(even) {background-color: #f2f2f2;}
