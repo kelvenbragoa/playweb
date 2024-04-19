@@ -68,6 +68,11 @@
 							<i class="align-middle" data-feather="box"></i> <span class="align-middle">Meu Clube</span>
 						</router-link>
 					</li>	
+					<li class="sidebar-item">
+						<router-link class="sidebar-link" to="/owner/profile">
+							<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Perfil</span>
+						</router-link>
+					</li>	
 			</div>
 		</nav>
 

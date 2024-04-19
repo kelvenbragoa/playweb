@@ -49,6 +49,8 @@ import CreateOwnerSchedules from './pages/owner/schedules/CreateOwnerSchedules.v
 import ShowOwnerSchedules from './pages/owner/schedules/ShowOwnerSchedules.vue';
 import EditOwnerSchedules from './pages/owner/schedules/EditOwnerSchedules.vue';
 
+import IndexOwnerProfile from './pages/owner/profile/IndexOwnerProfile.vue';
+
 export default [
     //auth
     {
@@ -384,5 +386,14 @@ export default [
             requiresAuth: true
         },
         component: EditOwnerSchedules,
+    },
+
+    {
+        path: '/owner/profile',
+        name: 'owner.profile',
+        meta: {
+            requiresAuth: true
+        },
+        component: IndexOwnerProfile,
     },
 ]

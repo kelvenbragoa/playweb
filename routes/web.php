@@ -70,6 +70,8 @@ Route::get('owner-search-users', [App\Http\Controllers\Owner\ScheduleController:
 Route::post('owner-schedule-copy', [App\Http\Controllers\Owner\ScheduleController::class, 'copy']);
 Route::post('owner-schedule-generate', [App\Http\Controllers\Owner\ScheduleController::class, 'generate']);
 Route::get('updateownerdashboard/{id}', [App\Http\Controllers\Admin\DashboardDataController::class, 'updatedata']);
+Route::resource('owner-profile', 'App\Http\Controllers\Owner\ProfileController');
+
 
 
 
