@@ -57,6 +57,16 @@ class PlayerController extends Controller
             ],400);
         }else{
 
+            if($data['system'] == 2){
+                $request->validate([
+                    'user_id' =>'required',
+                ]);
+            }else{
+                $request->validate([
+                    'name' =>'required',
+                ]);
+            }
+
             $schedule->update([
                 'status_id'=>2
             ]);
@@ -264,7 +274,7 @@ class PlayerController extends Controller
     }
 
     public function addNextSchedule($data){
-        
+ 
         foreach($data['multipleschedule'] as $item){
             if(count($item) > 0){
 
